@@ -61,6 +61,13 @@ create table entrega_gas.status_pedido(
 	id_status SERIAL primary key,
 	tipo_status varchar(30) not null
 );
+INSERT INTO entrega_gas.status_pedido (tipo_status)
+VALUES 
+('Rascunho'),
+('Disponivel'),
+('Aceito'),
+('Finalizado'),
+('Cancelado');
 
 create table entrega_gas.tipo_movimentacao(
 	id_tipo_movimentacao SERIAL primary key,
@@ -87,11 +94,11 @@ create table entrega_gas.endereco(
 
 create table entrega_gas.pedido(
 	id_pedido SERIAL primary key,
-	id_endereco int not null,
+	id_endereco int,
 	id_usuario int not null,
 	id_empresa int not null,
-	id_entregador int not null,
-	id_status int not null,
+	id_entregador int,
+	id_status int not NULL DEFAULT 1,
 	data_pedido TIMESTAMP default NOW(),
 	valor_compra NUMERIC(10,2) not null,
 	constraint fk_pedido_id_endereco foreign key (id_endereco) references entrega_gas.endereco (id_endereco),

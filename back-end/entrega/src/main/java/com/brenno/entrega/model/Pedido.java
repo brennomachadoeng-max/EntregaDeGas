@@ -25,7 +25,7 @@ public class Pedido {
     private Integer idPedido;
 
     @ManyToOne
-    @JoinColumn(name = "id_endereco", nullable = false)
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     @ManyToOne
@@ -37,7 +37,7 @@ public class Pedido {
     private Empresa empresa;
 
     @ManyToOne
-    @JoinColumn(name = "id_entregador", nullable = false)
+    @JoinColumn(name = "id_entregador")
     private Entregador entregador;
 
     @ManyToOne

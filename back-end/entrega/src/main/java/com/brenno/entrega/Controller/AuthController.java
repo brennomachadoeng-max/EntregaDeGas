@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -20,15 +22,18 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        boolean loginValido =
+        Optional<Usuario> usuarioOpt =
                 usuarioService.validarLogin(
                         request.getEmail(),
                         request.getSenha()
                 );
-        if (!loginValido) {
+        if (usuarioOpt.isEmpty()) {
             return ResponseEntity.status(401)
                     .body("Email ou senha inválidos");
         }
+        Usuario usuario = usuarioOpt.get();
+        usuario.setAtivo(true);
+        usuarioService.save(usuario);
         return ResponseEntity.ok("Login realizado com sucesso");
     }
 }

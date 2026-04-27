@@ -1,7 +1,9 @@
 package com.brenno.entrega.service;
 
 import com.brenno.entrega.model.Entregador;
+import com.brenno.entrega.model.Pedido;
 import com.brenno.entrega.repository.EntregadorRepository;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,10 @@ public class EntregadorService {
         entregador.setLocalizacao(dados.getLocalizacao());
         entregador.setUltimaAtualizacao(java.time.LocalDateTime.now());
         return entregadorRepository.save(entregador);
+    }
+
+    public List<Entregador> solicitarEntregador(Pedido pedido) {
+        Point localizacaoPedido = pedido.getEndereco().getLocalizacao();
+        return entregadorRepository.findEntregadoresProximos(localizacaoPedido, 5000);
     }
 }

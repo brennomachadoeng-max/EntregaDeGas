@@ -31,9 +31,11 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
-    public boolean validarLogin(String email, String senha) {
-        return usuarioRepository.findByEmail(email)
-                .map(u -> u.getSenha().equals(senha))
-                .orElse(false);
+    public Optional<Usuario> validarLogin(String email, String senha) {
+        return usuarioRepository.findByEmail(email).filter(usuario -> usuario.getSenha().equals(senha));
+    }
+
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 }

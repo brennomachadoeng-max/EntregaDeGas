@@ -1,6 +1,7 @@
 package com.brenno.entrega.Controller;
 
 import com.brenno.entrega.model.Entregador;
+import com.brenno.entrega.model.Pedido;
 import com.brenno.entrega.service.EntregadorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,11 @@ public class EntregadorController {
     public ResponseEntity<Entregador> atualizarLocalizacao(@PathVariable Integer id, @RequestBody Entregador entregador) {
         Entregador atualizado = entregadorService.atualizarLocalizcao(id, entregador);
         return ResponseEntity.ok(atualizado);
+    }
+
+    @PostMapping
+    public ResponseEntity<Pedido> solicitarEntregador(@RequestBody Pedido pedido) {
+
     }
 
 
