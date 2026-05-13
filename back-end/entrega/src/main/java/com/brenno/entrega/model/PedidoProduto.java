@@ -39,11 +39,4 @@ public class PedidoProduto {
 
     @Column(name = "desconto", nullable = false, precision = 10, scale = 2)
     private BigDecimal desconto;
-
-    public BigDecimal getSubtotal() {
-        BigDecimal quantidadeBd = BigDecimal.valueOf(quantidade);
-        return valorUnitario
-                .multiply(quantidadeBd)
-                .subtract(desconto);
-    }
 }

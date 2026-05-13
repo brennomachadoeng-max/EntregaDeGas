@@ -32,8 +32,6 @@ public class EnderecoController {
     ) {
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(id);
-        return ResponseEntity.ok(
-                enderecoService.findByUsuario(usuario)
-        );
+        return ResponseEntity.ok(enderecoService.findByUsuario(usuario));
     }
 }

@@ -35,5 +35,6 @@ public class AuthController {
         usuario.setAtivo(true);
         usuarioService.save(usuario);
         return ResponseEntity.ok("Login realizado com sucesso");
+        //Atividade: Retornar alguma coisa apos fazer o login, para garantir que permaneca ligada
     }
 }

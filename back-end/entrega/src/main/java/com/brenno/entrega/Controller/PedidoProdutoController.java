@@ -21,9 +21,7 @@ public class PedidoProdutoController {
 
     @PostMapping
     public ResponseEntity<List<PedidoProduto>> addProduto(@RequestBody List<PedidoProduto> itens){
-        itens.stream().forEach(item -> {
-            pedidoProdutoService.save(item);
-        });
+        itens.stream().forEach(item -> pedidoProdutoService.save(item));
         return ResponseEntity.ok().body(itens);
     }
 }

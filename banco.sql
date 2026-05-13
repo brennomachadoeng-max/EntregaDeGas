@@ -134,3 +134,13 @@ create table entrega_gas.pedido_produto(
 	constraint fk_pedido_produto_id_produto foreign key (id_produto) references entrega_gas.produto (id_produto)
 );
 
+CREATE TABLE entrega_gas.solicitacao_entrega (
+    id_solicitacao SERIAL PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_entregador INT NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    data_solicitacao TIMESTAMP,
+    CONSTRAINT tabela_solicitacao_entrega_fk_pedido FOREIGN KEY (id_pedido) REFERENCES entrega_gas.pedido(id_pedido),
+    CONSTRAINT tabela_solicitacao_entrega_fk_entregador FOREIGN KEY (id_entregador) REFERENCES entrega_gas.entregador(id_entregador)
+);
+
