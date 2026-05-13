@@ -19,6 +19,6 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
     count()
     findAllById(ids)
     */
-
+    List<Endereco> findByUsuarioIdUsuario(Integer idUsuario);
     List<Endereco> findByUsuario(Usuario usuario);
 }

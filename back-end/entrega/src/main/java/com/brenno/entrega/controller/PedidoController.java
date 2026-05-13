@@ -1,10 +1,9 @@
-package com.brenno.entrega.Controller;
+package com.brenno.entrega.controller;
 
 import com.brenno.entrega.DTO.PedidoProdutoRequest;
 import com.brenno.entrega.DTO.PedidoRequest;
 import com.brenno.entrega.model.*;
 import com.brenno.entrega.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

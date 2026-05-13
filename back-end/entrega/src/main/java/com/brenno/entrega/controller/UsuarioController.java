@@ -1,0 +1,27 @@
+package com.brenno.entrega.controller;
+
+import com.brenno.entrega.DTO.usuario.UsuarioCadastroDTO;
+import com.brenno.entrega.DTO.usuario.UsuarioResponseDTO;
+import com.brenno.entrega.model.Usuario;
+import com.brenno.entrega.service.UsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/usuarios")
+public class UsuarioController {
+    private final UsuarioService usuarioService;
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+    @PostMapping("/cadastro")
+    public ResponseEntity<UsuarioResponseDTO> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
+        Usuario salvo = usuarioService.cadastrar(dto);
+        UsuarioResponseDTO response = new UsuarioResponseDTO(salvo.getIdUsuario(), salvo.getNome(), salvo.getEmail());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+}

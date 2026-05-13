@@ -41,6 +41,6 @@ public class EntregadorService {
 
     public List<Entregador> solicitarEntregador(Pedido pedido) {
         Point localizacaoPedido = pedido.getEndereco().getLocalizacao();
-        return entregadorRepository.findEntregadoresProximos(localizacaoPedido, 5000);
+        return entregadorRepository.findEntregadoresProximos(localizacaoPedido, 3000);
     }
 }

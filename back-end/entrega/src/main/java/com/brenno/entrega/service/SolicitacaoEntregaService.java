@@ -37,4 +37,10 @@ public class SolicitacaoEntregaService {
     public List<SolicitacaoEntrega> listaDeEntregadoresProximo(Integer idPedido) {
         return repository.findByPedidoIdPedidoAndStatus(idPedido, StatusSolicitacao.PENDENTE);
     }
+
+    public SolicitacaoEntrega atualizarStatusSolicitacao(Integer idSolicitacao, StatusSolicitacao status) {
+        SolicitacaoEntrega solicitacao = repository.findById(idSolicitacao).orElseThrow();
+        solicitacao.setStatus(status);
+        return repository.save(solicitacao);
+    }
 }

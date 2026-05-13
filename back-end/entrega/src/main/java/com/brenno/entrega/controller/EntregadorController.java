@@ -1,4 +1,4 @@
-package com.brenno.entrega.Controller;
+package com.brenno.entrega.controller;
 
 import com.brenno.entrega.model.Entregador;
 import com.brenno.entrega.model.Pedido;

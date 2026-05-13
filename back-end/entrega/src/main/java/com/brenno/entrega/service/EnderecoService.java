@@ -1,8 +1,13 @@
 package com.brenno.entrega.service;
 
+import com.brenno.entrega.DTO.endereco.EnderecoRequestDTO;
 import com.brenno.entrega.model.Endereco;
 import com.brenno.entrega.model.Usuario;
 import com.brenno.entrega.repository.EnderecoRepository;
+import com.brenno.entrega.repository.UsuarioRepository;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +15,39 @@ import java.util.Optional;
 
 @Service
 public class EnderecoService {
-    public final EnderecoRepository enderecoRepository;
-    public EnderecoService(EnderecoRepository enderecoRepository) {
+    private final EnderecoRepository enderecoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final GeometryFactory geometryFactory;
+
+    public EnderecoService(
+            EnderecoRepository enderecoRepository,
+            UsuarioRepository usuarioRepository,
+            GeometryFactory geometryFactory) {
+
         this.enderecoRepository = enderecoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.geometryFactory = geometryFactory;
+    }
+
+
+    public Endereco cadastrar(EnderecoRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Point localizacao = geometryFactory.createPoint(new Coordinate(dto.getLongitude(), dto.getLatitude()));
+        Endereco endereco = new Endereco();
+        endereco.setUsuario(usuario);
+        endereco.setRua(dto.getRua());
+        endereco.setNumero(dto.getNumero());
+        endereco.setComplemento(dto.getComplemento());
+        endereco.setBairro(dto.getBairro());
+        endereco.setCidade(dto.getCidade());
+        endereco.setEstado(dto.getEstado());
+        endereco.setCep(dto.getCep());
+        endereco.setLocalizacao(localizacao);
+        return enderecoRepository.save(endereco);
+    }
+
+    public List<Endereco> findByUsuario(Integer usuarioId) {
+        return enderecoRepository.findByUsuarioIdUsuario(usuarioId);
     }
 
     public Endereco save(Endereco endereco) {
