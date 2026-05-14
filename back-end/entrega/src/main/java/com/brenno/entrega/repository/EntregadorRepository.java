@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EntregadorRepository extends JpaRepository<Entregador, Integer> {
@@ -26,4 +27,6 @@ public interface EntregadorRepository extends JpaRepository<Entregador, Integer>
     WHERE ST_DWithin(e.localizacao, :localizacao, :raio) = true
 """)
     List<Entregador> findEntregadoresProximos(Point localizacao, double raio);
+
+    Optional<Entregador> findByCpf(String cpf);
 }

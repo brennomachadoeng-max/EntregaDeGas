@@ -11,6 +11,7 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntregadorService {
@@ -60,5 +61,9 @@ public class EntregadorService {
         entregador.setSenha(passwordEncoder.encode(dto.getSenha()));
         entregador.setAtivo(true);
         return entregadorRepository.save(entregador);
+    }
+
+    public Entregador validarLogin(String cpf, String senha) {
+        return entregadorRepository.findByCpf(cpf).filter(entregador -> passwordEncoder.matches(senha, entregador.getSenha())).orElseThrow(() -> new RuntimeException("CPF ou senha inválidos"));
     }
 }
