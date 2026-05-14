@@ -30,7 +30,7 @@ public class EntregadorController {
         this.solicitacaoEntregaService = solicitacaoEntregaService;
     }
 
-    @PostMapping
+    @PostMapping("/cadastro")
     public ResponseEntity<EntregadorResponseDTO> cadastrar(@RequestBody EntregadorCadastroDTO dto) {
         Entregador salvo = entregadorService.cadastrar(dto);
         EntregadorResponseDTO response = new EntregadorResponseDTO(salvo.getIdEntregador(), salvo.getNome(), salvo.getTelefone());
