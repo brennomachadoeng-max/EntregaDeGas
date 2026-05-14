@@ -1,18 +1,26 @@
 package com.brenno.entrega.service;
 
+import com.brenno.entrega.DTO.pedido.PedidoRequest;
 import com.brenno.entrega.model.*;
 import com.brenno.entrega.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PedidoService {
     private final PedidoRepository pedidoRepository;
-    public PedidoService(PedidoRepository pedidoRepository) {
+    private final UsuarioService usuarioService;
+    private final EmpresaService empresaService;
+    private final StatusPedidoService statusPedidoService;
+    private final EnderecoService enderecoService;
+    public PedidoService(PedidoRepository pedidoRepository, UsuarioService usuarioService,EmpresaService empresaService, StatusPedidoService statusPedidoService, EnderecoService enderecoService) {
         this.pedidoRepository = pedidoRepository;
+        this.usuarioService = usuarioService;
+        this.empresaService = empresaService;
+        this.statusPedidoService = statusPedidoService;
+        this.enderecoService = enderecoService;
+
     }
 
     public Pedido save(Pedido pedido) {
@@ -23,8 +31,8 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public Optional<Pedido> findById(Integer id) {
-        return pedidoRepository.findById(id);
+    public Pedido findById(Integer id) {
+        return pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
 
     public void delete(Pedido pedido) {
@@ -38,6 +46,19 @@ public class PedidoService {
         pedido.setStatus(statusPedido);
         pedido.setEndereco(endereco);
         return save(pedido);
+    }
+
+    public Pedido criarPedido(PedidoRequest request) {
+        Usuario usuario = usuarioService.findById(request.getUsuarioId());
+        Empresa empresa = empresaService.findById(request.getEmpresaId());
+        StatusPedido status = statusPedidoService.findById(request.getStatusId());
+        Endereco endereco = enderecoService.findById(request.getEnderecoId());
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setEmpresa(empresa);
+        pedido.setStatus(status);
+        pedido.setEndereco(endereco);
+        return pedidoRepository.save(pedido);
     }
 
     @Transactional

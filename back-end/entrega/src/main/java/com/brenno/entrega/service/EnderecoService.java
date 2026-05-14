@@ -58,8 +58,8 @@ public class EnderecoService {
         return enderecoRepository.findAll();
     }
 
-    public Optional<Endereco> findById(Integer id) {
-        return enderecoRepository.findById(id);
+    public Endereco findById(Integer id) {
+        return enderecoRepository.findById(id).orElseThrow();
     }
 
     public void delete(Endereco endereco) {

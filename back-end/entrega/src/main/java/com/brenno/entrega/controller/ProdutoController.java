@@ -1,7 +1,10 @@
 package com.brenno.entrega.controller;
 
+import com.brenno.entrega.DTO.produto.ProdutoRequestDTO;
+import com.brenno.entrega.DTO.produto.ProdutoResponseDTO;
 import com.brenno.entrega.model.Produto;
 import com.brenno.entrega.service.ProdutoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,30 +21,28 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrar(@RequestBody Produto produto) {
-        Produto salvo = produtoService.save(produto);
-        return ResponseEntity.status(201).body(salvo);
+    public ResponseEntity<ProdutoResponseDTO> cadastrar(@RequestBody ProdutoRequestDTO dto) {
+        Produto salvo = produtoService.cadastrar(dto);
+        ProdutoResponseDTO response = new ProdutoResponseDTO(salvo.getIdProduto(), salvo.getNome(), salvo.getValor());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listar() {
-        return ResponseEntity.ok(produtoService.findAll());
+    public ResponseEntity<List<ProdutoResponseDTO>> listar() {
+        List<ProdutoResponseDTO> produtos = produtoService.findAll();
+        return ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> buscar(@PathVariable Integer id) {
-        return produtoService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ProdutoResponseDTO> buscar(@PathVariable Integer id) {
+        ProdutoResponseDTO response = produtoService.buscarPorId(id);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> atualizar(
-            @PathVariable Integer id,
-            @RequestBody Produto produto
-    ) {
-        Produto atualizado = produtoService.update(id, produto);
-        return ResponseEntity.ok(atualizado);
+    public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Integer id, @RequestBody ProdutoRequestDTO dto) {
+        ProdutoResponseDTO response = produtoService.update(id, dto);
+        return ResponseEntity.ok(response);
     }
 
 

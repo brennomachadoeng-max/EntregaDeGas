@@ -1,5 +1,7 @@
 package com.brenno.entrega.service;
 
+import com.brenno.entrega.DTO.produto.ProdutoRequestDTO;
+import com.brenno.entrega.DTO.produto.ProdutoResponseDTO;
 import com.brenno.entrega.model.Movimentacao;
 import com.brenno.entrega.model.Produto;
 import com.brenno.entrega.repository.ProdutoRepository;
@@ -19,27 +21,39 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public List<Produto> findAll(){
-        return produtoRepository.findAll();
+    public List<ProdutoResponseDTO> findAll() {
+        return produtoRepository.findAll().stream().map(produto -> new ProdutoResponseDTO(produto.getIdProduto(), produto.getNome(), produto.getValor())).toList();
     }
 
-    public Optional<Produto> findById(Integer id){
-        return produtoRepository.findById(id);
+    public Produto findById(Integer id) {
+        return produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
     }
 
     public void delete(Produto produto) {
         produtoRepository.delete(produto);
     }
 
-    public Produto update(Integer id, Produto dados) {
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    public ProdutoResponseDTO update(Integer id, ProdutoRequestDTO dto) {
+        Produto produto = findById(id);
+        produto.setNome(dto.getNome());
+        produto.setNcm(dto.getNcm());
+        produto.setQuantidade(dto.getQuantidade());
+        produto.setValor(dto.getValor());
+        Produto atualizado = save(produto);
+        return new ProdutoResponseDTO(atualizado.getIdProduto(), atualizado.getNome(), atualizado.getValor());
+    }
 
-        produto.setNome(dados.getNome());
-        produto.setNcm(dados.getNcm());
-        produto.setQuantidade(dados.getQuantidade());
-        produto.setValor(dados.getValor());
-
+    public Produto cadastrar(ProdutoRequestDTO dto) {
+        Produto produto = new Produto();
+        produto.setNome(dto.getNome());
+        produto.setNcm(dto.getNcm());
+        produto.setQuantidade(dto.getQuantidade());
+        produto.setValor(dto.getValor());
         return produtoRepository.save(produto);
+    }
+
+    public ProdutoResponseDTO buscarPorId(Integer id) {
+        Produto produto = findById(id);
+        return new ProdutoResponseDTO(produto.getIdProduto(), produto.getNome(), produto.getValor());
     }
 }

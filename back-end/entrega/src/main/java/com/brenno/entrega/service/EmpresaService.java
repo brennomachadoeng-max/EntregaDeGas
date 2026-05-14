@@ -22,8 +22,8 @@ public class EmpresaService {
         return empresaRepository.findAll();
     }
 
-    public Optional<Empresa> findById(Integer id) {
-        return empresaRepository.findById(id);
+    public Empresa findById(Integer id) {
+        return empresaRepository.findById(id).orElseThrow();
     }
 
     public void delete(Empresa empresa) {

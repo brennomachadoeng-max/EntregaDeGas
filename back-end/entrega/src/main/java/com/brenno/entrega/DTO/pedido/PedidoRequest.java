@@ -1,5 +1,6 @@
-package com.brenno.entrega.DTO;
+package com.brenno.entrega.DTO.pedido;
 
+import com.brenno.entrega.DTO.PedidoProdutoRequest;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,5 +1,6 @@
 package com.brenno.entrega.service;
 
+import com.brenno.entrega.DTO.solicitacao.SolicitacaoEntregaResponseDTO;
 import com.brenno.entrega.model.Entregador;
 import com.brenno.entrega.model.Pedido;
 import com.brenno.entrega.model.SolicitacaoEntrega;
@@ -34,8 +35,15 @@ public class SolicitacaoEntregaService {
         });
     }
 
-    public List<SolicitacaoEntrega> listaDeEntregadoresProximo(Integer idPedido) {
-        return repository.findByPedidoIdPedidoAndStatus(idPedido, StatusSolicitacao.PENDENTE);
+    public List<SolicitacaoEntregaResponseDTO> listaDeEntregadoresProximo(Integer idPedido) {
+        return repository.findByPedidoIdPedidoAndStatus(idPedido, StatusSolicitacao.PENDENTE).stream()
+                .map(solicitacao ->
+                        new SolicitacaoEntregaResponseDTO(
+                                solicitacao.getIdSolicitacao(),
+                                solicitacao.getEntregador().getIdEntregador(),
+                                solicitacao.getEntregador().getNome(),
+                                solicitacao.getStatus(),
+                                solicitacao.getDataSolicitacao())).toList();
     }
 
     public SolicitacaoEntrega atualizarStatusSolicitacao(Integer idSolicitacao, StatusSolicitacao status) {

@@ -3,9 +3,7 @@ package com.brenno.entrega.service;
 import com.brenno.entrega.model.StatusPedido;
 import com.brenno.entrega.repository.StatusPedidoRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StatusPedidoService {
@@ -22,8 +20,8 @@ public class StatusPedidoService {
         return statusPedidoRepository.findAll();
     }
 
-    public Optional<StatusPedido> findById(Integer id) {
-        return statusPedidoRepository.findById(id);
+    public StatusPedido findById(Integer id) {
+        return statusPedidoRepository.findById(id).orElseThrow();
     }
 
     public void delete(StatusPedido statusPedido) {
