@@ -1,7 +1,5 @@
 package com.brenno.entrega.controller;
 
-import com.brenno.entrega.DTO.entregador.EntregadorLoginRequest;
-import com.brenno.entrega.DTO.entregador.EntregadorLoginResponse;
 import com.brenno.entrega.DTO.login.LoginRequest;
 import com.brenno.entrega.DTO.login.LoginResponse;
 import com.brenno.entrega.model.Entregador;
@@ -27,15 +25,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Usuario usuario = usuarioService.validarLogin(request.getEmail(), request.getSenha()).orElseThrow(() -> new RuntimeException("Email ou senha invalida"));
+        Usuario usuario = usuarioService.validarLogin(request.getLogin(), request.getSenha()).orElseThrow(() -> new RuntimeException("Email ou senha invalida"));
         LoginResponse loginResponse = new LoginResponse(usuario.getIdUsuario(), usuario.getNome(), usuario.getEmail());
         return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/entregador/login")
-    public ResponseEntity<EntregadorLoginResponse> loginEntregador(@RequestBody EntregadorLoginRequest request) {
-        Entregador entregador = entregadorService.validarLogin(request.getCpf(), request.getSenha());
-       EntregadorLoginResponse response = new EntregadorLoginResponse(entregador.getIdEntregador(), entregador.getNome(), entregador.getTelefone());
+    public ResponseEntity<LoginResponse> loginEntregador(@RequestBody LoginRequest request) {
+        Entregador entregador = entregadorService.validarLogin(request.getLogin(), request.getSenha());
+       LoginResponse response = new LoginResponse(entregador.getIdEntregador(), entregador.getNome(), entregador.getTelefone());
         return ResponseEntity.ok(response);
     }
 }
