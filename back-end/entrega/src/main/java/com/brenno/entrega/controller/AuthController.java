@@ -33,7 +33,7 @@ public class AuthController {
     @PostMapping("/entregador/login")
     public ResponseEntity<LoginResponse> loginEntregador(@RequestBody LoginRequest request) {
         Entregador entregador = entregadorService.validarLogin(request.getLogin(), request.getSenha());
-       LoginResponse response = new LoginResponse(entregador.getIdEntregador(), entregador.getNome(), entregador.getTelefone());
-        return ResponseEntity.ok(response);
+       LoginResponse loginResponse = new LoginResponse(entregador.getIdEntregador(), entregador.getNome(), entregador.getTelefone());
+        return ResponseEntity.ok(loginResponse);
     }
 }
