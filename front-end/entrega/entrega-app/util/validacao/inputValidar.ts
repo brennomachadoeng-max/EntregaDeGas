@@ -20,3 +20,7 @@ export function isValidDate(value: string) {
 export function isValidSenha(value: string) {
     return value.length >= 5;
 }
+
+export function validarNome(value: string) {
+    return value.trim().length >= 3;
+}

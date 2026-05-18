@@ -7,12 +7,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#EEF2F7",
   },
 
-  form: {
-    flex: 1,
-    display: "flex",
-    gap: 20,
-  },
-
   scroll: {
     flexGrow: 1,
 
@@ -22,6 +16,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
 
     padding: 25,
+  },
+
+  form: {
+    width: "100%",
+    display: "flex",
+    gap: 20,
   },
 
   card: {
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
 
-    color: "#6B7280",
+    color: "#434750",
 
     textAlign: "center",
 
@@ -78,50 +78,25 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
   },
 
-  input: {
-    height: 60,
+  errorText: {
+    color: "#DC2626",
 
-    backgroundColor: "#F9FAFB",
+    fontSize: 14,
 
-    borderWidth: 1.5,
-    borderColor: "#E5E7EB",
+    textAlign: "center",
 
-    borderRadius: 18,
-
-    paddingHorizontal: 20,
-
-    fontSize: 16,
-
-    color: "#111827",
-
-    marginBottom: 18,
-
-    shadowColor: "#000",
-
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-
-    shadowOpacity: 0.03,
-
-    shadowRadius: 4,
-
-    elevation: 1,
+    marginTop: -10,
   },
-
   linksContainer: {
     marginTop: 25,
     gap: 14,
     alignItems: "center",
   },
-
   link: {
     color: "#747474",
     fontSize: 15,
     fontWeight: "600",
   },
-
   linkHover:{
     color: "#00184b",
   },

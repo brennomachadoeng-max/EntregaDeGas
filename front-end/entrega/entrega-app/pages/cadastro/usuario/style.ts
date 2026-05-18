@@ -109,4 +109,20 @@ export const styles = StyleSheet.create({
 
     elevation: 1,
   },
+
+  linksContainer: {
+    marginTop: 25,
+    gap: 14,
+    alignItems: "center",
+  },
+
+  link: {
+    color: "#747474",
+    fontSize: 15,
+    fontWeight: "600",
+  },
+
+  linkHover:{
+    color: "#00184b",
+  }
 });

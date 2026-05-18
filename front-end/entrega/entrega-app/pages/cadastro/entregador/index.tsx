@@ -1,65 +1,14 @@
 import { useState } from "react";
-import { View, Text, Alert, ActivityIndicator } from "react-native";
+import { View, Text, Pressable} from "react-native";
 import { styles } from "./style";
-
-import AnimatedCadastro from "../../../components/Animated/AnimatedCadastro";
-import Input from "../../../components/input/inputCadastro";
-import Botao from "../../../components/botao/botao";
-
+import {Botao, Input, AnimatedCadastro} from "../../../components";
 import { EntregadorCadastroDTO } from "./types";
-
-import {
-  isValidCPF,
-  isValidPhone,
-} from "../../../util/inputValidar";
-import { cadastrarEntregador } from "../../../service/entregadorService";
+import { useCadastroEntregador } from "../../../hooks/entregador/useCadastroEntregador";
 
 export default function CadastroEntregador() {
-  const [loading, setLoading] = useState(false); 
 
-  const [form, setForm] = useState<EntregadorCadastroDTO>({
-    nome: "",
-    cpf: "",
-    senha: "",
-    telefone: "",
-  });
-
-  const [errors, setErrors] = useState({
-    nome: false,
-    cpf: false,
-    telefone: false,
-    senha: false,
-  });
-
-  async function cadastrar() {
-    const newErrors = {
-      nome: form.nome.trim().length < 3,
-      cpf: !isValidCPF(form.cpf),
-      telefone: !isValidPhone(form.telefone),
-      senha: form.senha.length < 6,
-    };
-    setErrors(newErrors);
-
-    const hasError = Object.values(newErrors).some(Boolean);
-    if (hasError) {
-        Alert.alert("Atenção", "Por favor, corrija os erros no formulário.");
-        return;
-    }
-    setLoading(true);
-
-    try {
-      const response = await cadastrarEntregador(form);
-      Alert.alert(
-        "Sucesso!", 
-        `Entregador ${response.nome} cadastrado com ID ${response.idEntregador}`,
-        [{ text: "OK", onPress: () => console.log("Navegar para Login") }]
-      );      
-    } catch (error: any) {
-      Alert.alert("Erro ao cadastrar", error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { cadastrar, loading, errors } = useCadastroEntregador();
+  const [form, setForm] = useState<EntregadorCadastroDTO>({nome: "", cpf: "", senha: "", telefone: ""});
 
   return (
     <AnimatedCadastro>
@@ -68,6 +17,7 @@ export default function CadastroEntregador() {
         <Text style={styles.subtitle}>
           Preencha os dados abaixo
         </Text>
+        
         <View style={styles.form}>
           <Input
             placeholder="Nome completo"
@@ -109,10 +59,12 @@ export default function CadastroEntregador() {
               setForm({ ...form, senha: text })
             }
           />
-          <Botao
-            title="Cadastrar"
-            onPress={cadastrar}
-          />
+          <Botao title="Cadastrar" loading={loading} onPress={() => cadastrar(form)}/>
+          <View style={styles.linksContainer}>
+            <Pressable onPress={() => navigation.navigate("Login" as never)}>
+              {(state: any) => (<Text style={[styles.link, state.hovered && styles.linkHover]}>Login</Text>)}
+            </Pressable>
+          </View>
       </View>
       </View>
     </AnimatedCadastro>
