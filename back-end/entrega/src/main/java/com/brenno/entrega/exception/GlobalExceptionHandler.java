@@ -1,6 +1,6 @@
 package com.brenno.entrega.exception;
 
-import com.brenno.entrega.DTO.ErroDTO;
+import com.brenno.entrega.exception.dto.ErroDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
