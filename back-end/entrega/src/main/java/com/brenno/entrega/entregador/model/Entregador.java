@@ -39,13 +39,6 @@ public class Entregador {
     @Column(name = "ativo")
     private Boolean ativo;
 
-    @Column(name = "localizacao", columnDefinition = "geometry(Point,4326)")
-    private Point localizacao;
-
     @Column(name = "criado_em", insertable = false, updatable = false)
     private LocalDateTime criadoEm;
-
-    @Column(name = "ultima_atualizacao")
-    private LocalDateTime ultimaAtualizacao;
-
 }

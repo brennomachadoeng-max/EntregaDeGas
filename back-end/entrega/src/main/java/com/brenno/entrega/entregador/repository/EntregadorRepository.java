@@ -22,11 +22,5 @@ public interface EntregadorRepository extends JpaRepository<Entregador, Integer>
     count()
     findAllById(ids)
     */
-    @Query(value = """
-    SELECT * FROM entregadores e 
-    WHERE ST_DWithin(e.localizacao, :localizacao, :raio) = true
-""", nativeQuery = true)
-    List<Entregador> findEntregadoresProximos(Point localizacao, double raio);
-
     Optional<Entregador> findByCpf(String cpf);
 }

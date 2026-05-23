@@ -1,6 +1,7 @@
 package com.brenno.entrega.user.service;
 
 import com.brenno.entrega.user.dto.UsuarioCadastroDTO;
+import com.brenno.entrega.user.dto.UsuarioResponseDTO;
 import com.brenno.entrega.user.model.Usuario;
 import com.brenno.entrega.user.repository.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,11 @@ public class UsuarioService {
     }
 
     public Usuario cadastrar(UsuarioCadastroDTO dto) {
+        Usuario usuario = UsuarioCadastrarDTOParaUsuario(dto);
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario UsuarioCadastrarDTOParaUsuario(UsuarioCadastroDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
         usuario.setCpf(dto.getCpf());
@@ -28,7 +34,11 @@ public class UsuarioService {
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuario.setAtivo(true);
-        return usuarioRepository.save(usuario);
+        return usuario;
+    }
+
+    public UsuarioResponseDTO UsuarioParaUsuarioResponseDTO(Usuario usuario) {
+        return new UsuarioResponseDTO(usuario.getIdUsuario(), usuario.getNome(), usuario.getEmail());
     }
 
     public List<Usuario> findAll() {

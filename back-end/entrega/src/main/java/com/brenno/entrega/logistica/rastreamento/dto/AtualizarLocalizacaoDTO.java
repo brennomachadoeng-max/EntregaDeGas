@@ -1,4 +1,4 @@
-package com.brenno.entrega.entregador.dto;
+package com.brenno.entrega.logistica.rastreamento.dto;
 
 import lombok.Data;
 

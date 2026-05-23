@@ -1,6 +1,8 @@
 package com.brenno.entrega.prdido.itemPedido.service;
 
+import com.brenno.entrega.prdido.dto.PedidoEntregaResponseDTO;
 import com.brenno.entrega.prdido.itemPedido.dto.ItemPedidoRequest;
+import com.brenno.entrega.prdido.itemPedido.dto.ProdutoItemPedidoDTO;
 import com.brenno.entrega.prdido.model.Pedido;
 import com.brenno.entrega.prdido.itemPedido.model.ItemPedido;
 import com.brenno.entrega.produto.model.Produto;
@@ -51,4 +53,15 @@ public class ItemPedidoService {
             save(pedidoProduto);
         });
     }
+
+    public ProdutoItemPedidoDTO itemParaPedidoEntregaResponseDTO(ItemPedido item){
+        return new ProdutoItemPedidoDTO(
+                    item.getProduto().getNome(),
+                    item.getQuantidade(),
+                    item.getValorUnitario(),
+                    item.getDesconto()
+            );
+    }
+
+
 }

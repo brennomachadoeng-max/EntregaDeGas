@@ -1,11 +1,9 @@
 package com.brenno.entrega.entregador.service;
 
-import com.brenno.entrega.entregador.dto.AtualizarLocalizacaoDTO;
 import com.brenno.entrega.entregador.dto.EntregadorCadastroDTO;
 import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.prdido.model.Pedido;
 import com.brenno.entrega.entregador.repository.EntregadorRepository;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +14,10 @@ import java.util.List;
 public class EntregadorService {
     public final EntregadorRepository entregadorRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final GeometryFactory geometryFactory;
 
-    public EntregadorService(EntregadorRepository entregadorRepository, BCryptPasswordEncoder passwordEncoder, GeometryFactory geometryFactory) {
+    public EntregadorService(EntregadorRepository entregadorRepository, BCryptPasswordEncoder passwordEncoder) {
         this.entregadorRepository = entregadorRepository;
         this.passwordEncoder = passwordEncoder;
-        this.geometryFactory = geometryFactory;
     }
     public Entregador save(Entregador entregador) {
         return entregadorRepository.save(entregador);
@@ -37,19 +33,6 @@ public class EntregadorService {
 
     public void delete(Entregador entregador) {
         entregadorRepository.delete(entregador);
-    }
-
-    public Entregador atualizarLocalizacao(Integer id, AtualizarLocalizacaoDTO dto) {
-        Entregador entregador = findById(id);
-        Point localizacao = geometryFactory.createPoint(new Coordinate(dto.getLongitude(), dto.getLatitude()));
-        entregador.setLocalizacao(localizacao);
-        entregador.setUltimaAtualizacao(java.time.LocalDateTime.now());
-        return entregadorRepository.save(entregador);
-    }
-
-    public List<Entregador> solicitarEntregador(Pedido pedido) {
-        Point localizacaoPedido = pedido.getEndereco().getLocalizacao();
-        return entregadorRepository.findEntregadoresProximos(localizacaoPedido, 3000);
     }
 
     public Entregador cadastrar(EntregadorCadastroDTO dto) {
