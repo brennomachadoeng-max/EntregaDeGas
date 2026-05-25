@@ -49,13 +49,20 @@ create table entrega_gas.entregador(
 	senha varchar(255) not null,
 	telefone varchar(50) not null,
 	ativo BOOLEAN not null default false,
-	localizacao GEOMETRY(Point, 4326) not null,
 	criado_em TIMESTAMP DEFAULT NOW(),
-	ultima_atualizacao TIMESTAMP default NOW(),
 	constraint uq_entregador_cpf unique (cpf),
 	constraint uq_entregador_telefone unique (telefone)
 );
-CREATE INDEX idx_entregador_localizacao ON entrega_gas.entregador USING GIST (localizacao);
+
+create table entrega_gas.posicao_entregador(
+	id_posicao_entregador SERIAL primary key,
+	id_entregador int not null,
+	localizacao GEOMETRY(Point, 4326),
+	ultima_atualizacao TIMESTAMP default NOW(),
+	constraint uq_entregador unique (id_entregador),
+	constraint fk_entregador_posicao_entregador foreign key (id_entregador) references entrega_gas.entregador (id_entregador)
+);
+CREATE INDEX idx_posicao_entregador_localizacao ON entrega_gas.posicao_entregador USING GIST (localizacao);
 
 create table entrega_gas.status_pedido(
 	id_status SERIAL primary key,
