@@ -14,4 +14,16 @@ public class EnderecoRequestDTO {
     private String cep;
     private Double latitude;
     private Double longitude;
+
+    @Override
+    public String toString() {
+        return String.format(
+                "%s, %s, %s, %s, %s",
+                rua,
+                numero,
+                bairro,
+                cidade,
+                cep
+        );
+    }
 }

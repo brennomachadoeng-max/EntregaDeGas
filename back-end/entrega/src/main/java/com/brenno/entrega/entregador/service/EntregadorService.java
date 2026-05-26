@@ -1,5 +1,6 @@
 package com.brenno.entrega.entregador.service;
 
+import com.brenno.entrega.documentoUtils.DocumentoUtils;
 import com.brenno.entrega.entregador.dto.EntregadorCadastroDTO;
 import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.prdido.model.Pedido;
@@ -36,13 +37,23 @@ public class EntregadorService {
     }
 
     public Entregador cadastrar(EntregadorCadastroDTO dto) {
+        dto.setTelefone(DocumentoUtils.somenteNumeros(dto.getTelefone()));
+        dto.setCpf(DocumentoUtils.somenteNumeros(dto.getCpf()));
+        if(DocumentoUtils.possuiTamanhoCpf(dto.getCpf()) && DocumentoUtils.possuiTamanhoTelefone(dto.getTelefone())) {
+            Entregador entregador = EntregadorCadastrarDTOParaEntregador(dto);
+            return entregadorRepository.save(entregador);
+        }
+        return null;
+    }
+
+    public Entregador EntregadorCadastrarDTOParaEntregador(EntregadorCadastroDTO dto) {
         Entregador entregador = new Entregador();
         entregador.setNome(dto.getNome());
         entregador.setCpf(dto.getCpf());
         entregador.setTelefone(dto.getTelefone());
         entregador.setSenha(passwordEncoder.encode(dto.getSenha()));
         entregador.setAtivo(true);
-        return entregadorRepository.save(entregador);
+        return entregador;
     }
 
     public Entregador validarLogin(String cpf, String senha) {

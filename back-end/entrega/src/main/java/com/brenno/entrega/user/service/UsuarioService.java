@@ -1,5 +1,6 @@
 package com.brenno.entrega.user.service;
 
+import com.brenno.entrega.documentoUtils.DocumentoUtils;
 import com.brenno.entrega.user.dto.UsuarioCadastroDTO;
 import com.brenno.entrega.user.dto.UsuarioResponseDTO;
 import com.brenno.entrega.user.model.Usuario;
@@ -21,8 +22,13 @@ public class UsuarioService {
     }
 
     public Usuario cadastrar(UsuarioCadastroDTO dto) {
-        Usuario usuario = UsuarioCadastrarDTOParaUsuario(dto);
-        return usuarioRepository.save(usuario);
+        dto.setCpf(DocumentoUtils.somenteNumeros(dto.getCpf()));
+        dto.setTelefone(DocumentoUtils.somenteNumeros(dto.getTelefone()));
+        if (DocumentoUtils.possuiTamanhoCpf(dto.getCpf()) && DocumentoUtils.verificarEmail(dto.getEmail())) {
+            Usuario usuario = UsuarioCadastrarDTOParaUsuario(dto);
+            return usuarioRepository.save(usuario);
+        }
+        return null;
     }
 
     public Usuario UsuarioCadastrarDTOParaUsuario(UsuarioCadastroDTO dto) {
@@ -53,7 +59,7 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
-    public Optional<Usuario> validarLogin(String email, String senha) {
-        return usuarioRepository.findByEmail(email).filter(usuario -> passwordEncoder.matches(senha, usuario.getSenha()));
+    public Usuario validarLogin(String email, String senha) {
+        return usuarioRepository.findByEmail(email).filter(usuario -> passwordEncoder.matches(senha, usuario.getSenha())).orElseThrow(() -> new  RuntimeException("Email ou senha inválidos"));
     }
 }

@@ -19,20 +19,18 @@ import java.util.List;
 public class EntregadorController {
 
     private final EntregadorService entregadorService;
-    private final PedidoService pedidoService;
-    private final SolicitacaoEntregaService solicitacaoEntregaService;
 
-    public EntregadorController(
-            EntregadorService entregadorService,
-            PedidoService pedidoService, SolicitacaoEntregaService solicitacaoEntregaService) {
+    public EntregadorController(EntregadorService entregadorService) {
         this.entregadorService = entregadorService;
-        this.pedidoService = pedidoService;
-        this.solicitacaoEntregaService = solicitacaoEntregaService;
+
     }
 
     @PostMapping("/cadastro")
     public ResponseEntity<EntregadorResponseDTO> cadastrar(@RequestBody EntregadorCadastroDTO dto) {
         Entregador salvo = entregadorService.cadastrar(dto);
+        if (salvo == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         EntregadorResponseDTO response = new EntregadorResponseDTO(salvo.getIdEntregador(), salvo.getNome(), salvo.getTelefone());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
