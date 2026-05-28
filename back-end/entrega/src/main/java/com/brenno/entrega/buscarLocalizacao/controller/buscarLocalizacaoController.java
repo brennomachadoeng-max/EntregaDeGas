@@ -1,4 +1,4 @@
-package com.brenno.entrega.user.endereco.buscarLocalizacao.controller;
+package com.brenno.entrega.buscarLocalizacao.controller;
 
 
 import com.brenno.entrega.user.endereco.dto.EnderecoRequestDTO;

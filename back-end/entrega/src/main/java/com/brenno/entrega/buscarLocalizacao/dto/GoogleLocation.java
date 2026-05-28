@@ -1,4 +1,4 @@
-package com.brenno.entrega.user.endereco.buscarLocalizacao.dto;
+package com.brenno.entrega.buscarLocalizacao.dto;
 
 import lombok.Data;
 

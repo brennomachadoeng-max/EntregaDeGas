@@ -1,8 +1,8 @@
-package com.brenno.entrega.user.endereco.buscarLocalizacao.client;
+package com.brenno.entrega.buscarLocalizacao.client;
 
-import com.brenno.entrega.user.endereco.buscarLocalizacao.dto.CoordenadaDTO;
-import com.brenno.entrega.user.endereco.buscarLocalizacao.dto.GoogleLocation;
-import com.brenno.entrega.user.endereco.buscarLocalizacao.dto.GoogleResponse;
+import com.brenno.entrega.buscarLocalizacao.dto.CoordenadaDTO;
+import com.brenno.entrega.buscarLocalizacao.dto.GoogleLocation;
+import com.brenno.entrega.buscarLocalizacao.dto.GoogleResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

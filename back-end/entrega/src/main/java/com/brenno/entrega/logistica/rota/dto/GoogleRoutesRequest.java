@@ -13,22 +13,7 @@ public record GoogleRoutesRequest(
             Double destinoLng
     ) {
         this(
-                new Waypoint(
-                        new Location(
-                                new LatLng(
-                                        origemLat,
-                                        origemLng
-                                )
-                        )
-                ),
-                new Waypoint(
-                        new Location(
-                                new LatLng(
-                                        destinoLat,
-                                        destinoLng
-                                )
-                        )
-                ),
+                new Waypoint(new Location(new LatLng(origemLat, origemLng))), new Waypoint(new Location(new LatLng(destinoLat, destinoLng))),
                 "DRIVE"
         );
     }
