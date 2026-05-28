@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     /*
@@ -28,4 +30,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     AND p.status.idStatus = 2
     """)
     int aceitarPedido(Integer pedidoId, Integer entregadorId);
+    List<Pedido> findByUsuarioIdUsuarioOrderByDataPedidoDesc(Integer usuarioId);
+
 }

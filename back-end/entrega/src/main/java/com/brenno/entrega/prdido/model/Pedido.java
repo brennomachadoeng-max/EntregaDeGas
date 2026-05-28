@@ -3,7 +3,7 @@ package com.brenno.entrega.prdido.model;
 import com.brenno.entrega.empresa.model.Empresa;
 import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.prdido.itemPedido.model.ItemPedido;
-import com.brenno.entrega.produto.statusPedido.model.StatusPedido;
+import com.brenno.entrega.prdido.statusPedido.model.StatusPedido;
 import com.brenno.entrega.user.endereco.modal.Endereco;
 import com.brenno.entrega.user.model.Usuario;
 import jakarta.persistence.*;

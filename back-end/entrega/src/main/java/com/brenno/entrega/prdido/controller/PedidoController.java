@@ -1,5 +1,6 @@
 package com.brenno.entrega.prdido.controller;
 
+import com.brenno.entrega.prdido.dto.PedidoEntregaResponseDTO;
 import com.brenno.entrega.prdido.dto.PedidoRequest;
 import com.brenno.entrega.prdido.dto.PedidoResponseDTO;
 import com.brenno.entrega.prdido.itemPedido.service.ItemPedidoService;
@@ -7,10 +8,11 @@ import com.brenno.entrega.prdido.model.Pedido;
 import com.brenno.entrega.prdido.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedido")
@@ -30,5 +32,15 @@ public class PedidoController {
         pedidoProdutoService.adicionandoProdutoAoPedido(pedido, pedidoRequest.getProdutos());
         PedidoResponseDTO response = new PedidoResponseDTO(pedido.getIdPedido(), "Pedido criado com sucesso");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/historico")
+    public ResponseEntity<List<PedidoEntregaResponseDTO>> listaHistorico(Integer usuarioId) {
+        List<Pedido> pedidos = pedidoService.listaPedidosPorUsuario(usuarioId);
+        if (pedidos == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<PedidoEntregaResponseDTO> pedidoEntregaResponseDTO = pedidos.stream().map(pedidoService::PedidoParaListaPedidoResponseDTO).toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedidoEntregaResponseDTO);
     }
 }

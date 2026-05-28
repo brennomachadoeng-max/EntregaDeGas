@@ -1,6 +1,7 @@
 package com.brenno.entrega.empresa.service;
 
 import com.brenno.entrega.buscarLocalizacao.service.BuscarLocalizacaoService;
+import com.brenno.entrega.documentoUtils.DocumentoUtils;
 import com.brenno.entrega.empresa.dto.EmpresaCadastroDTO;
 import com.brenno.entrega.empresa.dto.EmpresaResponseDTO;
 import com.brenno.entrega.empresa.model.Empresa;
@@ -26,10 +27,15 @@ public class EmpresaService {
     }
 
     public Empresa cadastrar(EmpresaCadastroDTO dto){
+        dto.setCnpj(DocumentoUtils.somenteNumeros(dto.getCnpj()));
+        dto.setTelefone(DocumentoUtils.somenteNumeros(dto.getTelefone()));
         dto = buscarLocalizacaoService.buscarLocalizacaoEmpresa(dto);
         Point localizacao = geometryFactory.createPoint(new Coordinate(dto.getLongitude(), dto.getLatitude()));
-        Empresa empresa = EmpresaCadastrarParaEmpresa(dto, localizacao);
-        return empresaRepository.save(empresa);
+        if(DocumentoUtils.possuiTamanhoTelefone(dto.getTelefone()) && DocumentoUtils.possuiTamanhoCnpj(dto.getCnpj())){
+            Empresa empresa = EmpresaCadastrarParaEmpresa(dto, localizacao);
+            return empresaRepository.save(empresa);
+        }
+        return null;
     }
     public EmpresaResponseDTO EmpresaParaEmpresaResponse(Empresa empresa) {
         EmpresaResponseDTO empresaResponseDTO = new EmpresaResponseDTO();

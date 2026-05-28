@@ -1,6 +1,6 @@
-package com.brenno.entrega.produto.statusPedido.repository;
+package com.brenno.entrega.prdido.statusPedido.repository;
 
-import com.brenno.entrega.produto.statusPedido.model.StatusPedido;
+import com.brenno.entrega.prdido.statusPedido.model.StatusPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

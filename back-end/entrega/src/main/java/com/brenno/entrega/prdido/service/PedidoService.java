@@ -4,18 +4,21 @@ import com.brenno.entrega.empresa.model.Empresa;
 import com.brenno.entrega.prdido.dto.PedidoEntregaResponseDTO;
 import com.brenno.entrega.prdido.dto.PedidoRequest;
 import com.brenno.entrega.prdido.itemPedido.dto.ProdutoItemPedidoDTO;
+import com.brenno.entrega.prdido.itemPedido.model.ItemPedido;
+import com.brenno.entrega.prdido.itemPedido.service.ItemPedidoService;
 import com.brenno.entrega.prdido.model.Pedido;
 import com.brenno.entrega.prdido.repository.PedidoRepository;
 import com.brenno.entrega.empresa.service.EmpresaService;
-import com.brenno.entrega.produto.statusPedido.model.StatusPedido;
+import com.brenno.entrega.prdido.statusPedido.model.StatusPedido;
 import com.brenno.entrega.user.endereco.service.EnderecoService;
-import com.brenno.entrega.produto.statusPedido.service.StatusPedidoService;
+import com.brenno.entrega.prdido.statusPedido.service.StatusPedidoService;
 import com.brenno.entrega.user.endereco.modal.Endereco;
 import com.brenno.entrega.user.model.Usuario;
 import com.brenno.entrega.user.service.UsuarioService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -24,15 +27,38 @@ public class PedidoService {
     private final EmpresaService empresaService;
     private final StatusPedidoService statusPedidoService;
     private final EnderecoService enderecoService;
-    public PedidoService(PedidoRepository pedidoRepository, UsuarioService usuarioService,EmpresaService empresaService, StatusPedidoService statusPedidoService, EnderecoService enderecoService) {
+    private final ItemPedidoService itemPedidoService;
+    public PedidoService(PedidoRepository pedidoRepository, UsuarioService usuarioService,
+                         EmpresaService empresaService, StatusPedidoService statusPedidoService,
+                         EnderecoService enderecoService, ItemPedidoService itemPedidoService) {
         this.pedidoRepository = pedidoRepository;
         this.usuarioService = usuarioService;
         this.empresaService = empresaService;
         this.statusPedidoService = statusPedidoService;
         this.enderecoService = enderecoService;
+        this.itemPedidoService = itemPedidoService;
 
     }
 
+    public PedidoEntregaResponseDTO PedidoParaListaPedidoResponseDTO(Pedido pedido) {
+        PedidoEntregaResponseDTO pedidoEntregaResponseDTO = new PedidoEntregaResponseDTO();
+        pedidoEntregaResponseDTO.setIdPedido(pedido.getIdPedido());
+        pedidoEntregaResponseDTO.setNomeCliente(pedido.getUsuario().getNome());
+        pedidoEntregaResponseDTO.setTelefoneCliente(pedido.getUsuario().getTelefone());
+        pedidoEntregaResponseDTO.setRua(pedido.getEndereco().getRua());
+        pedidoEntregaResponseDTO.setNumero(pedido.getEndereco().getNumero());
+        pedidoEntregaResponseDTO.setBairro(pedido.getEndereco().getBairro());
+        pedidoEntregaResponseDTO.setCidade(pedido.getEndereco().getCidade());
+        pedidoEntregaResponseDTO.setDataPedido(pedido.getDataPedido());
+        pedidoEntregaResponseDTO.setValorCompra(pedido.getValorCompra());
+        List<ItemPedido> itens = pedido.getItens();
+        List<ProdutoItemPedidoDTO> produtoItems = itens.stream().map(itemPedidoService::itemParaPedidoEntregaResponseDTO).toList();
+        pedidoEntregaResponseDTO.setProdutos(produtoItems);
+        return pedidoEntregaResponseDTO;
+    }
+    public List<Pedido> listaPedidosPorUsuario(Integer usuarioId) {
+        return pedidoRepository.findByUsuarioIdUsuarioOrderByDataPedidoDesc(usuarioId);
+    }
     public Pedido save(Pedido pedido) {
         return pedidoRepository.save(pedido);
     }
@@ -75,7 +101,8 @@ public class PedidoService {
                 pedido.getEndereco().getBairro(),
                 pedido.getEndereco().getCidade(),
                 pedido.getValorCompra(),
-                produtos
+                produtos,
+                pedido.getDataPedido()
         );
 
     }

@@ -1,6 +1,6 @@
-package com.brenno.entrega.movimentacao.repository;
+package com.brenno.entrega.controleEstoque.movimentacao.repository;
 
-import com.brenno.entrega.movimentacao.model.Movimentacao;
+import com.brenno.entrega.controleEstoque.movimentacao.model.Movimentacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package com.brenno.entrega.movimentacao.model;
+package com.brenno.entrega.controleEstoque.movimentacao.model;
 
 import com.brenno.entrega.entregador.model.Entregador;
-import com.brenno.entrega.movimentacao.tipoMovimentacao.model.TipoMovimentacao;
+import com.brenno.entrega.controleEstoque.movimentacao.tipoMovimentacao.TipoMovimentacao;
 import com.brenno.entrega.prdido.model.Pedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,8 +30,8 @@ public class Movimentacao {
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_movimentacao", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_movimentacao")
     private TipoMovimentacao tipoMovimentacao;
 
     @Column(name = "data_hora", insertable = false, updatable = false)
@@ -42,6 +42,9 @@ public class Movimentacao {
 
     @Column(name = "quantidade_botijao_vazio")
     private Integer quantidadeBotijaoVazio;
+
+    @Column(name = "venda_botijao_completo")
+    private Integer quantidadeBotijaoCompleto;
 
     @Column(name = "observarcao")
     private String observacao;

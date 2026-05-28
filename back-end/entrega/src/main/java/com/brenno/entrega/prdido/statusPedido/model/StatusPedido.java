@@ -1,4 +1,4 @@
-package com.brenno.entrega.produto.statusPedido.model;
+package com.brenno.entrega.prdido.statusPedido.model;
 
 import jakarta.persistence.*;
 

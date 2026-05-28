@@ -1,7 +1,7 @@
-package com.brenno.entrega.produto.statusPedido.service;
+package com.brenno.entrega.prdido.statusPedido.service;
 
-import com.brenno.entrega.produto.statusPedido.model.StatusPedido;
-import com.brenno.entrega.produto.statusPedido.repository.StatusPedidoRepository;
+import com.brenno.entrega.prdido.statusPedido.model.StatusPedido;
+import com.brenno.entrega.prdido.statusPedido.repository.StatusPedidoRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
