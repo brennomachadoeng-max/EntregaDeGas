@@ -76,15 +76,6 @@ VALUES
 ('Finalizado'),
 ('Cancelado');
 
-create table entrega_gas.tipo_movimentacao(
-	id_tipo_movimentacao SERIAL primary key,
-	tipo_movimentacao varchar(30) not null,
-	operacao_gas varchar(1),
-	operacao_vazia varchar(1),
-	constraint chk_tipo_movimentacao_operacao_gas check (operacao_gas in ('+', '-') or operacao_gas is null),
-	constraint chk_tipo_movimentacao_operacao_vazia check (operacao_vazia in ('+', '-') or operacao_vazia is null) 
-);
-
 create table entrega_gas.endereco(
 	id_endereco SERIAL primary key,
 	id_usuario int not null,
@@ -115,20 +106,27 @@ create table entrega_gas.pedido(
 	constraint fk_pedido_status foreign key (id_status) references entrega_gas.status_pedido (id_status)
 );
 
+create table entrega_gas.operacao_entrega(
+	id_operacao_entrega SERIAL primary key,
+	id_entregador int not null,
+	data_hora TIMESTAMP default NOW(),
+	constraint fk_operacao_entrega_id_entregador foreign key (id_entregador) references entrega_gas.entregador (id_entregador)
+);
+
 create table entrega_gas.movimentacao(
 	id_movimentacao SERIAL primary key,
-	id_entregador int not null,
 	id_pedido int,
-	id_tipo_movimentacao int not null,
+	id_operacao_entrega int,
 	data_hora TIMESTAMP default NOW(),
 	quantidade_botijao_cheio int not null default 0,
 	quantidade_botijao_vazio int not null default 0,
+	tipo_movimentacao varchar(300) NOT NULL,
 	observarcao varchar(350),
-	constraint fk_movimentacao_id_entregador foreign key (id_entregador) references entrega_gas.entregador (id_entregador),
 	constraint fk_movimentacao_id_pedido foreign key (id_pedido) references entrega_gas.pedido (id_pedido),
-	constraint fk_movimentacao_id_tipo_movimentacao foreign key (id_tipo_movimentacao) references entrega_gas.tipo_movimentacao(id_tipo_movimentacao)
 );
 ALTER TABLE entrega_gas.movimentacao ALTER COLUMN id_pedido DROP NOT NULL;
+Alter table entrega_gas.movimentacao add column venda_botijao_completo int NOT NULL DEFAULT 0;
+Alter table entrega_gas.movimentacao add constraint fk_movimento_id_operacao_entrega foreign key (id_operacao_entrega) references entrega_gas.operacao_entrega (id_operacao_entrega)
 
 create table entrega_gas.pedido_produto(
 	id_pedido_produto SERIAL primary key,
