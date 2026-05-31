@@ -1,5 +1,6 @@
 package com.brenno.entrega.controleEstoque.movimentacao.model;
 
+import com.brenno.entrega.controleEstoque.operacaoEntrega.modal.OperacaoEntrega;
 import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.controleEstoque.movimentacao.tipoMovimentacao.TipoMovimentacao;
 import com.brenno.entrega.prdido.model.Pedido;
@@ -23,10 +24,6 @@ public class Movimentacao {
     private Integer idMovimentacao;
 
     @ManyToOne
-    @JoinColumn(name = "id_entregador", nullable = false)
-    private Entregador entregador;
-
-    @ManyToOne
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
@@ -48,4 +45,8 @@ public class Movimentacao {
 
     @Column(name = "observarcao")
     private String observacao;
+
+    @ManyToOne
+    @JoinColumn(name="id_operacao_entrega")
+    public OperacaoEntrega operacaoEntrega;
 }

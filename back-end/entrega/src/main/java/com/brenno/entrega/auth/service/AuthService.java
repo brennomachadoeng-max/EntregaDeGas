@@ -15,8 +15,6 @@ public class AuthService {
     }
 
     public LoginResponse login(String login, String senha) {
-        return providers.stream()
-                .filter(provider -> provider.suporta(login)).findFirst()
-                .orElseThrow(() -> new RuntimeException("Tipo de login não suportado")).autenticar(login, senha);
+        return providers.stream().filter(provider -> provider.suporta(login)).findFirst().orElseThrow(() -> new RuntimeException("Tipo de login não suportado")).autenticar(login, senha);
     }
 }

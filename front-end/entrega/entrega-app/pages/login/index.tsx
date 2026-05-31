@@ -11,10 +11,14 @@ export default function Login() {
   const { login, loading, error } = useLogin();
   const [form, setForm] = useState<LoginRequestDTO>({login: "", senha: ""});
   async function entrar() {
-    if (await login(form)) {
-      console.log("Navegar para Home");
+    const usuario = await login(form);
+
+    if (usuario) {
+        console.log("USUARIO LOGADO:", usuario);
+
+        navigation.navigate("Home" as never);
     }
-  }
+}
   return (
     <AnimatedCadastro>
       <View style={styles.card}>

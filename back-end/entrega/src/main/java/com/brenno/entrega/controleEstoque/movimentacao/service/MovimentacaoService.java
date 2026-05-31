@@ -21,52 +21,49 @@ import java.util.Optional;
 @Service
 public class MovimentacaoService {
     private final MovimentacaoRepository movimentacaoRepository;
-    private final EntregadorService entregadorService;
     private final PedidoService pedidoService;
 
-    public MovimentacaoService(MovimentacaoRepository movimentacaoRepository, EntregadorService entregadorService, PedidoService pedidoService) {
+    public MovimentacaoService(MovimentacaoRepository movimentacaoRepository, PedidoService pedidoService) {
         this.movimentacaoRepository = movimentacaoRepository;
-        this.entregadorService = entregadorService;
         this.pedidoService = pedidoService;
     }
 
-    public Movimentacao cargaInicial(MovimentacaoCargaInicialRuequestDTO movimentacaoCargaInicialRuequestDTO) {
+    public MovimentcaoResponseDTO cargaInicial(MovimentacaoCargaInicialRuequestDTO movimentacaoCargaInicialRuequestDTO) {
         Movimentacao movimentacao = MovimentacaoCargaInicialRuequestDTOParaMovimentacao(movimentacaoCargaInicialRuequestDTO);
-        return movimentacaoRepository.save(movimentacao);
+        return MovimentacaoParaMovimentcaoResponseDTO(movimentacaoRepository.save(movimentacao));
     }
-    public Movimentacao venda(MovimentacaoVendaRequestDTO movimentacaoVendaRequestDTO) {
+    public MovimentcaoResponseDTO venda(MovimentacaoVendaRequestDTO movimentacaoVendaRequestDTO) {
         MovimentacaoVendaRequestDTO movimentacaoVenda = ComputarMovimentacaoVenda(movimentacaoVendaRequestDTO);
         Movimentacao movimentacao = MovimentacaoVendaRequestDTOParaMovimentacao(movimentacaoVenda);
-        return movimentacaoRepository.save(movimentacao);
+        return MovimentacaoParaMovimentcaoResponseDTO(movimentacaoRepository.save(movimentacao));
     }
-    public Movimentacao reabastecer(MovimentacaoReabastecerRequestDTO movimentacaoReabastecerRequestDTO) {
-        Entregador entregador = entregadorService.findById(movimentacaoReabastecerRequestDTO.getIdEntregador());
+    public MovimentcaoResponseDTO reabastecer(MovimentacaoReabastecerRequestDTO movimentacaoReabastecerRequestDTO) {
         Movimentacao movimentacao = new Movimentacao();
-        movimentacao.setEntregador(entregador);
+        movimentacao.setOperacaoEntrega(movimentacaoReabastecerRequestDTO.getOperacaoEntrega());
         movimentacao.setDataHora(LocalDateTime.now());
         movimentacao.setTipoMovimentacao(TipoMovimentacao.REABASTECER);
         movimentacao.setQuantidadeBotijaoCheio(movimentacaoReabastecerRequestDTO.getQuantidadeBotijaoCheio());
         movimentacao.setQuantidadeBotijaoVazio(-movimentacaoReabastecerRequestDTO.getQuantidadeBotijaoVazio());
-        return movimentacaoRepository.save(movimentacao);
+        return MovimentacaoParaMovimentcaoResponseDTO(movimentacaoRepository.save(movimentacao));
     }
 
     public Movimentacao MovimentacaoVendaRequestDTOParaMovimentacao(MovimentacaoVendaRequestDTO movimentacaoVendaRequestDTO){
-        Entregador entregador = entregadorService.findById(movimentacaoVendaRequestDTO.getIdEntregador());
         Pedido pedido = pedidoService.findById(movimentacaoVendaRequestDTO.getIdPedido());
         Movimentacao movimentacao = new Movimentacao();
-        movimentacao.setEntregador(entregador);
+        movimentacao.setOperacaoEntrega(movimentacaoVendaRequestDTO.getOperacaoEntrega());
         movimentacao.setPedido(pedido);
         movimentacao.setTipoMovimentacao(movimentacaoVendaRequestDTO.getTipoMovimentacao());
         movimentacao.setDataHora(movimentacaoVendaRequestDTO.getDataEntrega());
         movimentacao.setQuantidadeBotijaoCheio(movimentacaoVendaRequestDTO.getQuantidadeBotijaoCheio());
         movimentacao.setQuantidadeBotijaoVazio(movimentacaoVendaRequestDTO.getQuantidadeBotijaoVazio());
         movimentacao.setQuantidadeBotijaoCompleto(movimentacao.getQuantidadeBotijaoCompleto());
+        movimentacao.setOperacaoEntrega(movimentacaoVendaRequestDTO.getOperacaoEntrega());
         return movimentacao;
 
     }
     public MovimentcaoResponseDTO MovimentacaoParaMovimentcaoResponseDTO(Movimentacao movimentacao) {
         MovimentcaoResponseDTO movimentacaoResponseDTO = new MovimentcaoResponseDTO();
-        movimentacaoResponseDTO.setIdEntregador(movimentacao.getEntregador().getIdEntregador());
+        movimentacaoResponseDTO.setIdEntregador(movimentacao.getOperacaoEntrega().getEntregador().getIdEntregador());
         movimentacaoResponseDTO.setIdPedido(movimentacao.getPedido().getIdPedido());
         movimentacaoResponseDTO.setDataEntrega(movimentacao.getDataHora());
         movimentacaoResponseDTO.setQuantidadeBotijaoCheio(movimentacao.getQuantidadeBotijaoCheio());
@@ -75,9 +72,8 @@ public class MovimentacaoService {
         return movimentacaoResponseDTO;
     }
     public Movimentacao MovimentacaoCargaInicialRuequestDTOParaMovimentacao (MovimentacaoCargaInicialRuequestDTO movimentacaoCargaInicialRuequestDTO){
-        Entregador entregador = entregadorService.findById(movimentacaoCargaInicialRuequestDTO.getIdEntregador());
         Movimentacao movimentacao = new Movimentacao();
-        movimentacao.setEntregador(entregador);
+        movimentacao.setOperacaoEntrega(movimentacaoCargaInicialRuequestDTO.getOperacaoEntrega());
         movimentacao.setTipoMovimentacao(TipoMovimentacao.CARGA_INICIAL);
         movimentacao.setDataHora(LocalDateTime.now());
         movimentacao.setQuantidadeBotijaoCheio(movimentacaoCargaInicialRuequestDTO.getQuantidadeBotijaoCheio());
