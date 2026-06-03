@@ -11,25 +11,6 @@ export const styles = StyleSheet.create({
     paddingBottom: 50,
   },
 
-  mapContainer: {
-    height: 240,
-
-    backgroundColor: "#172033",
-
-    borderRadius: 30,
-
-    justifyContent: "center",
-    alignItems: "center",
-
-    marginTop: 20,
-  },
-
-  mapText: {
-    color: "#94A3B8",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-
   header: {
     marginTop: 30,
     marginBottom: 25,

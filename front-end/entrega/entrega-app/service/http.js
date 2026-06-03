@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080";
+const API_URL = "http://192.168.1.108:8080";
 
 async function request(url, options = {}) {
     const response = await fetch(`${API_URL}${url}`, options);

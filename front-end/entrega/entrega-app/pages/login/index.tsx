@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { styles } from "./style";
 import {AnimatedCadastro, Botao, Input} from "../../components";
 import { useLogin } from "../../hooks/login/useLogin";
@@ -10,15 +10,15 @@ export default function Login() {
   const navigation = useNavigation();
   const { login, loading, error } = useLogin();
   const [form, setForm] = useState<LoginRequestDTO>({login: "", senha: ""});
+  
   async function entrar() {
     const usuario = await login(form);
 
     if (usuario) {
-        console.log("USUARIO LOGADO:", usuario);
-
         navigation.navigate("Home" as never);
     }
 }
+
   return (
     <AnimatedCadastro>
       <View style={styles.card}>

@@ -12,7 +12,6 @@ export function useLogin() {
     async function login(from: LoginRequestDTO) {
         setLoading(true);
         setError("");
-
         try {
             let response;
             if(isValidEmail(from.login)) {
@@ -25,7 +24,6 @@ export function useLogin() {
                 setError("Digite um email ou CPF válido.");
                 return null;
             }
-
             await salvarUsuario(response);
             return response;
         }     
