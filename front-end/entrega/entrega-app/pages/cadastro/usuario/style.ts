@@ -8,9 +8,8 @@ export const styles = StyleSheet.create({
   },
 
   form: {
-    flex: 1,
-    display: "flex",
-    gap: 20,
+    width: "100%",
+    gap: 16,
   },
 
   scroll: {

@@ -4,9 +4,10 @@ import { styles } from "./style";
 import {Botao, Input, AnimatedCadastro} from "../../../components";
 import { EntregadorCadastroDTO } from "./types";
 import { useCadastroEntregador } from "../../../hooks/entregador/useCadastroEntregador";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CadastroEntregador() {
-
+  const navigation = useNavigation();
   const { cadastrar, loading, errors } = useCadastroEntregador();
   const [form, setForm] = useState<EntregadorCadastroDTO>({nome: "", cpf: "", senha: "", telefone: ""});
 
