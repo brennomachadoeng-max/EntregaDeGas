@@ -3,11 +3,10 @@ package com.brenno.entrega.notificacao.solicitacao.service;
 import com.brenno.entrega.logistica.rastreamento.service.PosicaoEntregadorService;
 import com.brenno.entrega.notificacao.solicitacao.dto.SolicitacaoEntregaResponseDTO;
 import com.brenno.entrega.entregador.model.Entregador;
-import com.brenno.entrega.prdido.model.Pedido;
+import com.brenno.entrega.pedido.model.Pedido;
 import com.brenno.entrega.notificacao.solicitacao.model.SolicitacaoEntrega;
 import com.brenno.entrega.notificacao.model.StatusSolicitacao;
 import com.brenno.entrega.notificacao.solicitacao.repository.SolicitacaoEntregaRepository;
-import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

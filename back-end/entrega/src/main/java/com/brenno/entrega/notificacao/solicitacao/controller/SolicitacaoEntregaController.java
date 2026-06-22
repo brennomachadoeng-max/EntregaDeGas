@@ -1,15 +1,14 @@
 package com.brenno.entrega.notificacao.solicitacao.controller;
 
 import com.brenno.entrega.entregador.model.Entregador;
-import com.brenno.entrega.prdido.dto.PedidoEntregaResponseDTO;
-import com.brenno.entrega.prdido.itemPedido.dto.ProdutoItemPedidoDTO;
+import com.brenno.entrega.pedido.dto.PedidoEntregaResponseDTO;
+import com.brenno.entrega.pedido.itemPedido.dto.ProdutoItemPedidoDTO;
 import com.brenno.entrega.notificacao.solicitacao.dto.SolicitacaoEntregaResponseDTO;
-import com.brenno.entrega.prdido.itemPedido.model.ItemPedido;
-import com.brenno.entrega.prdido.itemPedido.service.ItemPedidoService;
-import com.brenno.entrega.prdido.model.Pedido;
+import com.brenno.entrega.pedido.itemPedido.service.ItemPedidoService;
+import com.brenno.entrega.pedido.model.Pedido;
 import com.brenno.entrega.notificacao.solicitacao.model.SolicitacaoEntrega;
 import com.brenno.entrega.notificacao.model.StatusSolicitacao;
-import com.brenno.entrega.prdido.service.PedidoService;
+import com.brenno.entrega.pedido.service.PedidoService;
 import com.brenno.entrega.notificacao.solicitacao.service.SolicitacaoEntregaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

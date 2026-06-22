@@ -1,10 +1,10 @@
 CREATE DATABASE daligas;
 
-CREATE EXTENSION postgis;
+CREATE EXTENSION IF NOT EXISTS postgis;
 
 SELECT PostGIS_Version();
 
-CREATE SCHEMA entrega_gas;
+CREATE SCHEMA IF NOT EXISTS entrega_gas;
 
 create table entrega_gas.usuario(
 	id_usuario SERIAL primary key,
@@ -40,7 +40,6 @@ create table entrega_gas.empresa(
 	constraint uq_empresa_cnpj unique (cnpj),
 	constraint uq_empresa_razao_social unique (razao_social)
 );
-CREATE INDEX idx_entregador_localizacao ON entrega_gas.entregador USING GIST (localizacao);
 
 create table entrega_gas.entregador(
 	id_entregador SERIAL primary key,
@@ -53,6 +52,7 @@ create table entrega_gas.entregador(
 	constraint uq_entregador_cpf unique (cpf),
 	constraint uq_entregador_telefone unique (telefone)
 );
+CREATE INDEX idx_entregador_localizacao ON entrega_gas.entregador USING GIST (localizacao);
 
 create table entrega_gas.posicao_entregador(
 	id_posicao_entregador SERIAL primary key,

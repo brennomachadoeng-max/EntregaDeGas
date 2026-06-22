@@ -2,7 +2,7 @@ package com.brenno.entrega.notificacao.solicitacao.model;
 
 import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.notificacao.model.StatusSolicitacao;
-import com.brenno.entrega.prdido.model.Pedido;
+import com.brenno.entrega.pedido.model.Pedido;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -4,7 +4,7 @@ import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.entregador.service.EntregadorService;
 import com.brenno.entrega.logistica.rastreamento.model.PosicaoEntregador;
 import com.brenno.entrega.logistica.rastreamento.repository.PosicaoEntregadorRepository;
-import com.brenno.entrega.prdido.model.Pedido;
+import com.brenno.entrega.pedido.model.Pedido;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;

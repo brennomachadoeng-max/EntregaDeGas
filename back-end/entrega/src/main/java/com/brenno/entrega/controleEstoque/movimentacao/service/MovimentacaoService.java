@@ -1,7 +1,5 @@
 package com.brenno.entrega.controleEstoque.movimentacao.service;
 
-import com.brenno.entrega.entregador.model.Entregador;
-import com.brenno.entrega.entregador.service.EntregadorService;
 import com.brenno.entrega.controleEstoque.movimentacao.dto.MovimentacaoCargaInicialRuequestDTO;
 import com.brenno.entrega.controleEstoque.movimentacao.dto.MovimentacaoReabastecerRequestDTO;
 import com.brenno.entrega.controleEstoque.movimentacao.dto.MovimentacaoVendaRequestDTO;
@@ -9,9 +7,9 @@ import com.brenno.entrega.controleEstoque.movimentacao.dto.MovimentcaoResponseDT
 import com.brenno.entrega.controleEstoque.movimentacao.model.Movimentacao;
 import com.brenno.entrega.controleEstoque.movimentacao.repository.MovimentacaoRepository;
 import com.brenno.entrega.controleEstoque.movimentacao.tipoMovimentacao.TipoMovimentacao;
-import com.brenno.entrega.prdido.itemPedido.model.ItemPedido;
-import com.brenno.entrega.prdido.model.Pedido;
-import com.brenno.entrega.prdido.service.PedidoService;
+import com.brenno.entrega.pedido.itemPedido.model.ItemPedido;
+import com.brenno.entrega.pedido.model.Pedido;
+import com.brenno.entrega.pedido.service.PedidoService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

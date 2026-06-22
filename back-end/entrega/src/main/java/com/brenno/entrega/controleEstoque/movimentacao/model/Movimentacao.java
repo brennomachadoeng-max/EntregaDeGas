@@ -1,9 +1,8 @@
 package com.brenno.entrega.controleEstoque.movimentacao.model;
 
 import com.brenno.entrega.controleEstoque.operacaoEntrega.modal.OperacaoEntrega;
-import com.brenno.entrega.entregador.model.Entregador;
 import com.brenno.entrega.controleEstoque.movimentacao.tipoMovimentacao.TipoMovimentacao;
-import com.brenno.entrega.prdido.model.Pedido;
+import com.brenno.entrega.pedido.model.Pedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

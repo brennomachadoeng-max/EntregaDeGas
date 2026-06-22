@@ -3,9 +3,11 @@ import { isValidEmail, isValidCPF } from "../../util/validacao/inputValidar";
 import {loginUsuario} from "../../service/loginService";
 import { useState } from "react";
 import { salvarUsuario } from "../../service/authStorage";
+import { useAuthContext } from "../auth/useAuthContext";
 
 
 export function useLogin() {
+    const { setUser } = useAuthContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
    
@@ -25,6 +27,7 @@ export function useLogin() {
                 return null;
             }
             await salvarUsuario(response);
+            setUser(response);
             return response;
         }     
         catch (error) {
