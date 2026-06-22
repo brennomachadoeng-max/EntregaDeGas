@@ -7,10 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,17 +24,17 @@ public class Usuario {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "cpf")
-    private String cpf;
+    @Embedded
+    private Cpf cpf;
 
     @Column(name = "data_nascimento")
     private Date dataNascimento;
 
-    @Column(name = "telefone")
-    private String telefone;
+    @Embedded
+    private Telefone telefone;
 
-    @Column(name = "email")
-    private String email;
+    @Embedded
+    private Email email;
 
     @Column(name = "senha")
     private String senha;

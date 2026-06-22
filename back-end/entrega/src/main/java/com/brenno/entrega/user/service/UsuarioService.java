@@ -1,15 +1,16 @@
 package com.brenno.entrega.user.service;
 
-import com.brenno.entrega.documentoUtils.DocumentoUtils;
 import com.brenno.entrega.user.dto.UsuarioCadastroDTO;
 import com.brenno.entrega.user.dto.UsuarioResponseDTO;
+import com.brenno.entrega.user.model.Cpf;
+import com.brenno.entrega.user.model.Email;
+import com.brenno.entrega.user.model.Telefone;
 import com.brenno.entrega.user.model.Usuario;
 import com.brenno.entrega.user.repository.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -22,29 +23,25 @@ public class UsuarioService {
     }
 
     public Usuario cadastrar(UsuarioCadastroDTO dto) {
-        dto.setCpf(DocumentoUtils.somenteNumeros(dto.getCpf()));
-        dto.setTelefone(DocumentoUtils.somenteNumeros(dto.getTelefone()));
-        if (DocumentoUtils.possuiTamanhoCpf(dto.getCpf()) && DocumentoUtils.verificarEmail(dto.getEmail())) {
-            Usuario usuario = UsuarioCadastrarDTOParaUsuario(dto);
-            return usuarioRepository.save(usuario);
-        }
-        return null;
+        Usuario usuario = UsuarioCadastrarDTOParaUsuario(dto);
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario UsuarioCadastrarDTOParaUsuario(UsuarioCadastroDTO dto) {
-        Usuario usuario = new Usuario();
-        usuario.setNome(dto.getNome());
-        usuario.setCpf(dto.getCpf());
-        usuario.setDataNascimento(dto.getDataNascimento());
-        usuario.setTelefone(dto.getTelefone());
-        usuario.setEmail(dto.getEmail());
-        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
-        usuario.setAtivo(true);
-        return usuario;
+        return new Usuario(
+                null,
+                dto.getNome(),
+                new Cpf(dto.getCpf()),
+                dto.getDataNascimento(),
+                new Telefone(dto.getTelefone()),
+                new Email(dto.getEmail()),
+                passwordEncoder.encode(dto.getSenha()),
+                true
+        );
     }
 
     public UsuarioResponseDTO UsuarioParaUsuarioResponseDTO(Usuario usuario) {
-        return new UsuarioResponseDTO(usuario.getIdUsuario(), usuario.getNome(), usuario.getEmail());
+        return new UsuarioResponseDTO(usuario.getIdUsuario(), usuario.getNome(), usuario.getEmail().getEndereco());
     }
 
     public List<Usuario> findAll() {

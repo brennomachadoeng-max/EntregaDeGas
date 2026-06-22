@@ -1,10 +1,10 @@
 package com.brenno.entrega.user.dto;
 
-import lombok.Data;
+import lombok.Value;
 
 import java.sql.Date;
 
-@Data
+@Value
 public class UsuarioCadastroDTO {
 
     private String nome;

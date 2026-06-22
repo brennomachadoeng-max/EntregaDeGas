@@ -8,15 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    /*
-    save(usuario)
-    findById(id)
-    findAll()
-    deleteById(id)
-    delete(usuario)
-    existsById(id)
-    count()
-    findAllById(ids)
-    */
     Optional<Usuario> findByEmail(String email);
 }

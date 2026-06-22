@@ -1,10 +1,8 @@
 package com.brenno.entrega.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
+@Value
 public class UsuarioResponseDTO {
 
     private Integer idUsuario;
