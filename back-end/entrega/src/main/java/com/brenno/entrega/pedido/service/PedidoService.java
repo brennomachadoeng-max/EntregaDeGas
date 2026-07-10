@@ -43,7 +43,7 @@ public class PedidoService {
         PedidoEntregaResponseDTO pedidoEntregaResponseDTO = new PedidoEntregaResponseDTO();
         pedidoEntregaResponseDTO.setIdPedido(pedido.getIdPedido());
         pedidoEntregaResponseDTO.setNomeCliente(pedido.getUsuario().getNome());
-        pedidoEntregaResponseDTO.setTelefoneCliente(pedido.getUsuario().getTelefone());
+        pedidoEntregaResponseDTO.setTelefoneCliente(pedido.getUsuario().getTelefone().getNumero());
         pedidoEntregaResponseDTO.setRua(pedido.getEndereco().getRua());
         pedidoEntregaResponseDTO.setNumero(pedido.getEndereco().getNumero());
         pedidoEntregaResponseDTO.setBairro(pedido.getEndereco().getBairro());
@@ -94,7 +94,7 @@ public class PedidoService {
         return new PedidoEntregaResponseDTO(
                 pedido.getIdPedido(),
                 pedido.getUsuario().getNome(),
-                pedido.getUsuario().getTelefone(),
+                pedido.getUsuario().getTelefone().getNumero(),
                 pedido.getEndereco().getRua(),
                 pedido.getEndereco().getNumero(),
                 pedido.getEndereco().getBairro(),

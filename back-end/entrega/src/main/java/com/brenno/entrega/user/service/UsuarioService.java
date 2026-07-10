@@ -57,6 +57,10 @@ public class UsuarioService {
     }
 
     public Usuario validarLogin(String email, String senha) {
-        return usuarioRepository.findByEmail(email).filter(usuario -> passwordEncoder.matches(senha, usuario.getSenha())).orElseThrow(() -> new  RuntimeException("Email ou senha inválidos"));
+        Usuario usuario = usuarioRepository.findByEmailEndereco(email);
+        if (usuario == null || !passwordEncoder.matches(senha, usuario.getSenha())) {
+            throw new RuntimeException("Email ou senha inválidos");
+        }
+        return usuario;
     }
 }

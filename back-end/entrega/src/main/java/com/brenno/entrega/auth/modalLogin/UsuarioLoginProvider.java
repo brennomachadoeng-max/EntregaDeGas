@@ -27,7 +27,7 @@ public class UsuarioLoginProvider implements LoginProvider {
         return new LoginResponse(
                 usuario.getIdUsuario(),
                 usuario.getNome(),
-                usuario.getEmail(),
+                usuario.getEmail().getEndereco(),
                 "USUARIO"
         );
     }

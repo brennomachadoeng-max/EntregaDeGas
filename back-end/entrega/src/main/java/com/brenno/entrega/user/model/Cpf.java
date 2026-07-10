@@ -3,7 +3,9 @@ package com.brenno.entrega.user.model;
 import com.brenno.entrega.documentoUtils.DocumentoUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
+@Getter
 @Embeddable
 public class Cpf {
 

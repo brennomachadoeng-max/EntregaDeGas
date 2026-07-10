@@ -22,7 +22,7 @@ public class PosicaoEntregadorController {
     public ResponseEntity<EntregadorResponseDTO> atualizarLocalizacao(@PathVariable Integer id, @RequestBody AtualizarLocalizacaoDTO dto) {
         PosicaoEntregador posicao = posicaoEntregadorService.atualizarLocalizacao(id, dto);
         Entregador atualizado = posicao.getEntregador();
-        EntregadorResponseDTO response = new EntregadorResponseDTO(atualizado.getIdEntregador(), atualizado.getNome(), atualizado.getTelefone());
+        EntregadorResponseDTO response = new EntregadorResponseDTO(atualizado.getIdEntregador(), atualizado.getNome(), atualizado.getTelefone(), atualizado.getAtivo());
         return ResponseEntity.ok(response);
     }
 }

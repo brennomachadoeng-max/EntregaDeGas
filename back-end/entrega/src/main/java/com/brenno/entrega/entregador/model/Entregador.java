@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "entregador", schema = "entrega_gas")
 public class Entregador {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_entregador")
@@ -41,4 +42,13 @@ public class Entregador {
 
     @Column(name = "criado_em", insertable = false, updatable = false)
     private LocalDateTime criadoEm;
+
+    public Entregador(String nome, String cpf, String senha, String telefone, Boolean ativo) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.ativo = ativo;
+        this.criadoEm = LocalDateTime.now();
+    }
 }

@@ -21,11 +21,18 @@ public class EntregadorController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<EntregadorResponseDTO> cadastrar(@RequestBody EntregadorCadastroDTO dto) {
-        Entregador salvo = entregadorService.cadastrar(dto);
+        EntregadorResponseDTO salvo = entregadorService.cadastrar(dto);
         if (salvo == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        EntregadorResponseDTO response = new EntregadorResponseDTO(salvo.getIdEntregador(), salvo.getNome(), salvo.getTelefone());
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<EntregadorResponseDTO> alternarStatusOnline(@PathVariable Integer id) {
+        EntregadorResponseDTO entregador = entregadorService.alternarStatusOnline(id);
+        return ResponseEntity.ok(entregador);
+    }
+
+
 }

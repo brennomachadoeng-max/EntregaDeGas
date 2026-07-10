@@ -10,4 +10,5 @@ public class EntregadorResponseDTO {
     private Integer idEntregador;
     private String nome;
     private String telefone;
+    private Boolean ativo;
 }
