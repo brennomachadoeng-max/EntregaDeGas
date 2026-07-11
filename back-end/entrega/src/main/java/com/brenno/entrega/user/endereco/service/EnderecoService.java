@@ -2,6 +2,7 @@ package com.brenno.entrega.user.endereco.service;
 
 import com.brenno.entrega.buscarLocalizacao.service.BuscarLocalizacaoService;
 import com.brenno.entrega.user.endereco.dto.EnderecoRequestDTO;
+import com.brenno.entrega.user.endereco.dto.EnderecoResponseDTO;
 import com.brenno.entrega.user.endereco.modal.Endereco;
 import com.brenno.entrega.user.model.Usuario;
 import com.brenno.entrega.user.endereco.repository.EnderecoRepository;
@@ -51,6 +52,10 @@ public class EnderecoService {
         endereco.setCep(dto.getCep());
         endereco.setLocalizacao(localizacao);
         return endereco;
+    }
+
+    public EnderecoResponseDTO EnderecoParaEndercoResponseDTO(Endereco endereco) {
+        return new EnderecoResponseDTO(endereco.getIdEndereco(), endereco.getRua(), endereco.getNumero(), endereco.getBairro(), endereco.getCidade(), endereco.getEstado());
     }
     public List<Endereco> findByUsuario(Integer usuarioId) {
         return enderecoRepository.findByUsuarioIdUsuario(usuarioId);

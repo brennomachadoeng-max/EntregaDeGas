@@ -20,19 +20,32 @@ public class GoogleGeocodingClient {
     }
 
     public CoordenadaDTO buscarCoordenadas(String endereco) {
+        try {
+            GoogleResponse response =
+                    restClient.get()
+                            .uri(uriBuilder -> uriBuilder
+                                    .scheme("https")
+                                    .host("maps.googleapis.com")
+                                    .path("/maps/api/geocode/json")
+                                    .queryParam("address", endereco)
+                                    .queryParam("key", apiKey)
+                                    .build())
+                            .retrieve()
+                            .body(GoogleResponse.class);
 
-        GoogleResponse response =
-                restClient.get()
-                        .uri(uriBuilder -> uriBuilder
-                                .scheme("https")
-                                .host("maps.googleapis.com")
-                                .path("/maps/api/geocode/json")
-                                .queryParam("address", endereco)
-                                .queryParam("key", apiKey)
-                                .build())
-                        .retrieve()
-                        .body(GoogleResponse.class);
-        GoogleLocation location = response.getResults().getFirst().getGeometry().getLocation();
-        return new CoordenadaDTO(location.getLat(), location.getLng());
+            if (response == null || response.getResults() == null || response.getResults().isEmpty()) {
+                return new CoordenadaDTO(0.0, 0.0);
+            }
+
+            GoogleLocation location = response
+                    .getResults()
+                    .getFirst()
+                    .getGeometry()
+                    .getLocation();
+
+            return new CoordenadaDTO(location.getLat(), location.getLng());
+        } catch (Exception e) {
+            return new CoordenadaDTO(0.0, 0.0);
+        }
     }
 }

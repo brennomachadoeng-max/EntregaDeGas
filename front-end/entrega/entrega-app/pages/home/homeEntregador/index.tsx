@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text, Pressable, Platform } from "react-native";
-import { styles } from "./style"; // Criaremos esse arquivo de estilo abaixo
-import { ListPedidos, Saudacao } from "../../../components"; 
+import { ScrollView, View, Text, Pressable, Platform, Alert } from "react-native";
+
+import { styles } from "./style";
+import { ListPedidos, Saudacao } from "../../../components";
+import { useTrocaAtivoEntregador } from "../../../hooks/entregador/useTrocarAtivoEntregador";
 
 export default function HomeEntregador() {
   const [isOnline, setIsOnline] = useState(false);
+
+  const { trocarStatus, carregando } = useTrocaAtivoEntregador();
+
+  async function handleTrocarStatus() {
+    try {
+      const entregadorAtualizado = await trocarStatus();
+      setIsOnline(entregadorAtualizado.ativo);
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível alterar seu status.");
+    }
+  }
 
   return (
     <ScrollView
@@ -12,8 +25,8 @@ export default function HomeEntregador() {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      {Platform.OS !== 'web' && <Saudacao />}
-      
+      {Platform.OS !== "web" && <Saudacao />}
+
       <View style={[styles.heroCard, isOnline && styles.heroCardOnline]}>
         <Text style={styles.heroIcon}>
           {isOnline ? "🚗" : "💤"}
@@ -24,17 +37,22 @@ export default function HomeEntregador() {
         </Text>
 
         <Text style={styles.heroDescription}>
-          {isOnline 
-            ? "Aguarde novas solicitações de gás na sua região. Mantenha o app aberto." 
+          {isOnline
+            ? "Aguarde novas solicitações de gás na sua região. Mantenha o app aberto."
             : "Fique online para começar a receber pedidos e realizar entregas hoje."}
         </Text>
 
         <Pressable
           style={[styles.heroButton, isOnline && styles.heroButtonOffline]}
-          onPress={() => setIsOnline(!isOnline)}
+          onPress={handleTrocarStatus}
+          disabled={carregando}
         >
           <Text style={[styles.heroButtonText, isOnline && styles.heroButtonTextOffline]}>
-            {isOnline ? "FICAR OFFLINE" : "FICAR ONLINE AGORA"}
+            {carregando
+              ? "ALTERANDO..."
+              : isOnline
+                ? "FICAR OFFLINE"
+                : "FICAR ONLINE AGORA"}
           </Text>
         </Pressable>
       </View>
@@ -63,7 +81,6 @@ export default function HomeEntregador() {
         </View>
       </View>
 
-      {/* Histórico Recente */}
       <Text style={styles.sectionTitle}>
         Próximas Entregas / Histórico
       </Text>

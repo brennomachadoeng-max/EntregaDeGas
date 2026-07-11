@@ -28,7 +28,9 @@ public class EnderecoController {
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<Endereco>> buscarPorUsuario(@PathVariable Integer id) {
-        return ResponseEntity.ok(enderecoService.findByUsuario(id));
+    public ResponseEntity<List<EnderecoResponseDTO>> buscarPorUsuario(@PathVariable Integer id) {
+        List<Endereco> enderecos = enderecoService.findByUsuario(id);
+        List<EnderecoResponseDTO> response = enderecos.stream().map(enderecoService::EnderecoParaEndercoResponseDTO).toList();
+        return ResponseEntity.ok(response);
     }
 }

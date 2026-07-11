@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.1.103:8080";
+const API_URL = "http://localhost:8080";
 
 async function request(url, options = {}) {
     const response = await fetch(`${API_URL}${url}`, options);
@@ -79,4 +79,14 @@ export async function getBlob(url) {
     }
 
     return await response.blob();
+}
+
+export function patch(url, body) {
+    return request(url, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: body ? JSON.stringify(body) : undefined
+    });
 }

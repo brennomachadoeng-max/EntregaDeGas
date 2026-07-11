@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   View,
@@ -6,11 +6,21 @@ import {
   Pressable,
 } from "react-native";
 
-import { ListProdutos } from "../../components";
+import { ListProdutos, Endereco } from "../../components";
+import { EnderecoResponseDTO } from "../../components/endereco/types";
 import { useCarrinho } from "../../hooks/carrinho/useCarrinho";
+import { useBuscarEndereco } from "../../hooks/endereco/useBuscarEndereco";
 import { styles } from "./style";
 
 export default function Pedido() {
+  const [enderecoSelecionado, setEnderecoSelecionado] =
+    useState<EnderecoResponseDTO | null>(null);
+
+  const {
+    enderecos,
+    buscar,
+  } = useBuscarEndereco();
+
   const {
     carrinho,
     adicionarProduto,
@@ -34,6 +44,14 @@ export default function Pedido() {
 
       {/* LISTA DE PRODUTOS (controle aqui dentro) */}
       <ListProdutos onAdd={adicionarProduto} />
+
+      {/* ENDEREÇO */}
+      <Endereco
+        enderecos={enderecos}
+        enderecoSelecionado={enderecoSelecionado}
+        onSelecionarEndereco={setEnderecoSelecionado}
+        onEnderecoCadastrado={buscar}
+      />
 
       {/* CARRINHO */}
       <View style={styles.section}>
@@ -128,6 +146,7 @@ export default function Pedido() {
             CONFIRMAR PEDIDO
           </Text>
         </Pressable>
+
         <Pressable
           style={styles.clearButton}
           onPress={limparCarrinho}

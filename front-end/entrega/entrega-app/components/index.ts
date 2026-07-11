@@ -5,5 +5,6 @@ import Mapa from "./mapa";
 import ListPedidos from "./listaPedidos";
 import Saudacao from "./saudacao";
 import ListProdutos from "./listProdutos";
+import Endereco from "./endereco";
 
-export { Botao, Input, AnimatedCadastro, Mapa, ListPedidos, Saudacao, ListProdutos };
+export { Botao, Input, AnimatedCadastro, Mapa, ListPedidos, Saudacao, ListProdutos, Endereco };
