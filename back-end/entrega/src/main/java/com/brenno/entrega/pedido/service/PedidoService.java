@@ -81,13 +81,14 @@ public class PedidoService {
     public Pedido criarPedido(PedidoRequest request) {
         Usuario usuario = usuarioService.findById(request.getUsuarioId());
         Empresa empresa = empresaService.findById(request.getEmpresaId());
-        StatusPedido status = statusPedidoService.findById(request.getStatusId());
+        StatusPedido status = statusPedidoService.findById(2);
         Endereco endereco = enderecoService.findById(request.getEnderecoId());
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
         pedido.setEmpresa(empresa);
         pedido.setStatus(status);
         pedido.setEndereco(endereco);
+        pedido.setValorCompra(request.getValorCompra());
         return pedidoRepository.save(pedido);
     }
     public PedidoEntregaResponseDTO PedidoParaPedidoEntregaResponseDTO(Pedido pedido, List<ProdutoItemPedidoDTO> produtos) {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   ScrollView,
   View,
   Text,
@@ -10,16 +11,19 @@ import { ListProdutos, Endereco } from "../../components";
 import { EnderecoResponseDTO } from "../../components/endereco/types";
 import { useCarrinho } from "../../hooks/carrinho/useCarrinho";
 import { useBuscarEndereco } from "../../hooks/endereco/useBuscarEndereco";
+import { useCadastrarPedido } from "../../hooks/pedido/useCadastrarPedido";
 import { styles } from "./style";
 
 export default function Pedido() {
   const [enderecoSelecionado, setEnderecoSelecionado] =
     useState<EnderecoResponseDTO | null>(null);
 
+  const { enderecos, buscar } = useBuscarEndereco();
+
   const {
-    enderecos,
-    buscar,
-  } = useBuscarEndereco();
+    cadastrar: cadastrarPedido,
+    loading: loadingPedido,
+  } = useCadastrarPedido();
 
   const {
     carrinho,
@@ -28,6 +32,34 @@ export default function Pedido() {
     total,
     limparCarrinho,
   } = useCarrinho();
+
+  async function confirmarPedido() {
+    if (carrinho.length === 0) {
+      Alert.alert("Atenção", "Adicione produtos ao carrinho.");
+      return;
+    }
+
+    if (!enderecoSelecionado) {
+      Alert.alert("Atenção", "Selecione um endereço de entrega.");
+      return;
+    }
+
+    const sucesso = await cadastrarPedido({
+  empresaId: 1,
+  enderecoId: enderecoSelecionado.idEndereco,
+  valorCompra: total,
+  produtos: carrinho.map((item) => ({
+    produtoId: item.produto.idProduto,
+    quantidade: item.quantidade,
+    desconto: 0,
+  })),
+});
+
+    if (sucesso) {
+      limparCarrinho();
+      setEnderecoSelecionado(null);
+    }
+  }
 
   return (
     <ScrollView
@@ -141,9 +173,13 @@ export default function Pedido() {
 
       {/* AÇÕES */}
       <View style={styles.actions}>
-        <Pressable style={styles.confirmButton}>
+        <Pressable
+          style={styles.confirmButton}
+          onPress={confirmarPedido}
+          disabled={loadingPedido}
+        >
           <Text style={styles.confirmButtonText}>
-            CONFIRMAR PEDIDO
+            {loadingPedido ? "CONFIRMANDO..." : "CONFIRMAR PEDIDO"}
           </Text>
         </Pressable>
 
