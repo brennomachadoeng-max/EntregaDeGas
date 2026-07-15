@@ -37,6 +37,12 @@ public class SolicitacaoEntregaController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/notificar/entragador/{idEntregador}")
+    public ResponseEntity<List<SolicitacaoEntregaResponseDTO>> notificarEntregador(@PathVariable Integer idEntregador) {
+        List<SolicitacaoEntregaResponseDTO> solicitacaoEntregaResponseDTOS = solicitacaoEntregaService.notificarEntregador(idEntregador);
+        return ResponseEntity.ok(solicitacaoEntregaResponseDTOS);
+    }
+
     @PostMapping("/{id}/expirar")
     public ResponseEntity<String> expirar(@PathVariable Integer id) {
         solicitacaoEntregaService.atualizarStatusSolicitacao(id, StatusSolicitacao.EXPIRADA);
@@ -66,4 +72,6 @@ public class SolicitacaoEntregaController {
         solicitacaoEntregaService.criarSolicitacoes(pedido, entregadores);
         return ResponseEntity.status(HttpStatus.CREATED).body("Solicitações enviadas com sucesso");
     }
+
+
 }

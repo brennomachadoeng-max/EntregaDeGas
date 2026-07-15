@@ -46,4 +46,6 @@ public class PosicaoEntregadorService {
         List<PosicaoEntregador> posicaoEntregadors = repository.findEntregadoresProximos(localizacaoPedido, raio);
         return posicaoEntregadors.stream().map(PosicaoEntregador::getEntregador).toList();
     }
+
+
 }

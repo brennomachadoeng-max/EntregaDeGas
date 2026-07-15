@@ -6,5 +6,6 @@ import ListPedidos from "./listaPedidos";
 import Saudacao from "./saudacao";
 import ListProdutos from "./listProdutos";
 import Endereco from "./endereco";
+import NotificacarEntrega from "./notificacao/notificarEntrega";
 
-export { Botao, Input, AnimatedCadastro, Mapa, ListPedidos, Saudacao, ListProdutos, Endereco };
+export { Botao, Input, AnimatedCadastro, Mapa, ListPedidos, Saudacao, ListProdutos, Endereco, NotificacarEntrega };

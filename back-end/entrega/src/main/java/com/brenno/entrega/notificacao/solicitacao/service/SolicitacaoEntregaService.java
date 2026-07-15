@@ -1,5 +1,6 @@
 package com.brenno.entrega.notificacao.solicitacao.service;
 
+import com.brenno.entrega.entregador.service.EntregadorService;
 import com.brenno.entrega.logistica.rastreamento.service.PosicaoEntregadorService;
 import com.brenno.entrega.notificacao.solicitacao.dto.SolicitacaoEntregaResponseDTO;
 import com.brenno.entrega.entregador.model.Entregador;
@@ -17,10 +18,12 @@ public class SolicitacaoEntregaService {
 
     private final SolicitacaoEntregaRepository repository;
     private final PosicaoEntregadorService posicaoEntregadorService;
+    private final EntregadorService entregadorService;
 
-    public SolicitacaoEntregaService(SolicitacaoEntregaRepository repository, PosicaoEntregadorService posicaoEntregadorService) {
+    public SolicitacaoEntregaService(SolicitacaoEntregaRepository repository, PosicaoEntregadorService posicaoEntregadorService, EntregadorService entregadorService) {
         this.repository = repository;
         this.posicaoEntregadorService = posicaoEntregadorService;
+        this.entregadorService = entregadorService;
     }
 
     public SolicitacaoEntrega save(SolicitacaoEntrega solicitacao) {
@@ -60,7 +63,15 @@ public class SolicitacaoEntregaService {
         solicitacao.setStatus(status);
         return save(solicitacao);
     }
+
+    public List<SolicitacaoEntregaResponseDTO> notificarEntregador(Integer idEntregador) {
+        List<SolicitacaoEntrega> solicitacaoEntregas = repository.findByEntregadorIdEntregadorAndStatus(idEntregador, StatusSolicitacao.PENDENTE);
+        return solicitacaoEntregas.stream().map(this::SolicitacaoEntregaParaSolicitacaoEntregaResponseDTO).toList();
+    }
+
     public List<Entregador> solicitarEntregador(Pedido pedido) {
-        return posicaoEntregadorService.buscarEntregadorProximo(pedido, 5000);
+        Entregador entregador = entregadorService.findById(2);
+        return List.of(entregador);
+        //posicaoEntregadorService.buscarEntregadorProximo(pedido, 5000);
     }
 }

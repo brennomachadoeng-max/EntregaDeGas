@@ -9,4 +9,6 @@ import java.util.List;
 public interface SolicitacaoEntregaRepository extends JpaRepository<SolicitacaoEntrega, Integer> {
 
     List<SolicitacaoEntrega> findByPedidoIdPedidoAndStatus(Integer pedidoId, StatusSolicitacao status);
+
+    List<SolicitacaoEntrega> findByEntregadorIdEntregadorAndStatus(Integer entregadorId, StatusSolicitacao status);
 }
